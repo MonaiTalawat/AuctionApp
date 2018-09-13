@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "388770444886",
+    "firebase_url": "https://auctioncarapp.firebaseio.com",
+    "project_id": "auctioncarapp",
+    "storage_bucket": "auctioncarapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388770444886:android:241ca951d8255bf8",
+        "android_client_info": {
+          "package_name": "com.example.narupak.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388770444886-f86jsrub2rg26vbme24fiqp9i7mc6t30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt7mEMu4j5jUDfONTaYaZvw0kUc_sCj2E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

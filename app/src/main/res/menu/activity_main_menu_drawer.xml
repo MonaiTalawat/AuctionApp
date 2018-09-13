@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/auction"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="ทะเบียนรถที่กำลังประมูล" />
+        <item
+            android:id="@+id/register_auction"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="ทะเบียนรถที่เปิดให้ลงทะเบียน" />
+        <item
+            android:id="@+id/my_auction"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="ทะเบียนรถของฉัง" />
+    </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/notification"
+                android:icon="@drawable/ic_menu_share"
+                android:title="แจ้งเตือน" />
+            <item
+                android:id="@+id/setting"
+                android:icon="@drawable/ic_menu_send"
+                android:title="ตั้งค่า" />
+        </menu>
+    </item>
+
+</menu>

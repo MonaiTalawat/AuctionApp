@@ -48,7 +48,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     var price: Array<Int> = arrayOf(500, 1000, 1500, 2000, 2500)
     //val mRootRef = FirebaseDatabase.getInstance().reference
     var time: Long = 30000
-    var value: String? = null
+    var value: Long? = null
     var bidTime: Long? = null
     var firstTime: Long? = null
     var totalTime: Long? = 0
@@ -117,7 +117,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     btn_auction.isEnabled = true
                     btn_auction.setBackgroundColor(Color.parseColor("#1E90FF"))
                 }, 2000)
-                value = dataSnapshot.child("winner").child("price").value as String?
+                value = dataSnapshot.child("winner").child("price").value.toString().toLong()
                 version = dataSnapshot.child("winner").child("version").value as Long?
 
                 price[0] = parseInt(value.toString()) + 500
@@ -151,8 +151,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                         //timer.cancel()
                     } else {
                         timer.start()
-                        //tempPrice = value!!.toLong()
-                        //Toast.makeText(applicationContext, "tempPrice = " + tempPrice.toString(), Toast.LENGTH_LONG).show()
+                        //Toast.makeText(applicationContext, "version = " + version.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
                 tempBidTime = bidTime
@@ -208,29 +207,9 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             }
         })
 
-//        mWinner!!.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//
-//            }
-//
-//            override fun onCancelled(p0: DatabaseError) {
-//
-//            }
-//        })
-
         mHistory!!.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val mapData = dataSnapshot.value as HashMap<String?,Mapdata?>
-                Log.d("map",mapData.toString())
-                //var gson = Gson()
-                //var map = mapData.get("history") as Map<String,History>
-//                var historyGson = gson.toJson(mapData.toString())
-//                val history = gson.fromJson(mapData.toString(),History::class.java)
-//
-//                Log.d("history",history.toString())
-                //var history = gson.fromJson(historyGson,History::class.java)
-                //val bid = history.history
                 val mapDataSorted = TreeMap<String? ,Mapdata?>(Collections.reverseOrder())//TreeMap<String, Mapdata?>(mapData)
                 mapDataSorted.putAll(mapData)
                 val mapDataEntry = mapDataSorted.entries
@@ -256,10 +235,36 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             }
         })
         btn_auction.setOnClickListener(View.OnClickListener {
-            var auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toString(), "0", status, firstTime.toString(), spinnerPrice.toString())
-                var mData = mDatabase!!.child("person").child("member").child("number")
-                    tranSacTionForAuction(mData,userId,licenseCarId,auctionRealtimeDatabase,spinnerPrice,tempVersion)
-                    tempVersion = version
+            tempVersion = version
+            //tempPrice = value!!.toLong()
+            mPerson!!.child("winner").child("price").setValue(spinnerPrice.toString())
+            var auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toString(), "0", status, firstTime.toString(), spinnerPrice!!.toLong())
+            var mData = mDatabase!!.child("person").child("winner")
+            tranSacTionForAuction(mData,userId,licenseCarId,auctionRealtimeDatabase,spinnerPrice,tempVersion)
+//            var versionWinners = parseInt(version.toString())+1
+//            ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
+//            var mapWinner =  HashMap<String, Any>()
+//            mapWinner.put("bidTime",ServerValue.TIMESTAMP)
+//            mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
+//            mapWinner.put("price", auctionRealtimeDatabase.price!!)
+//            mapWinner.put("version",versionWinners)
+//            mPerson!!.child("winner").setValue(mapWinner)
+//            ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
+//
+//            ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
+//            var map = HashMap<String?, Any?>()
+//            map.put("bidtime", ServerValue.TIMESTAMP)
+//            map.put("bidder", auctionRealtimeDatabase.bidder!!)
+//            map.put("firstTime", auctionRealtimeDatabase.firstTime!!)
+//            map.put("price", auctionRealtimeDatabase.price!!)
+//            mHistory!!.push().setValue(map)
+//            ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
+//
+//            /////////////////////////////////// insert data member to firebase////////////////////////////////
+//            mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
+//            mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
+//            mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
+//            /////////////////////////////////// insert data member to firebase////////////////////////////////
         })
 
     }
@@ -322,55 +327,42 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
     fun tranSacTionForAuction(mData: DatabaseReference, userId: Int, licenseCarId: Long, auctionRealtimeDatabase: AuctionRealtimeDatabase, spinner: String?, tempVersion: Long?) {
         mData.runTransaction(object : Transaction.Handler{
-            override fun onComplete(p0: DatabaseError?, p1: Boolean, dataSnapshot : DataSnapshot?) {
-                if(dataSnapshot == null){
-                    Toast.makeText(baseContext,"Transaction Failed",Toast.LENGTH_LONG).show()
-                }
-//                if(tempVersion == )
-                if(dataSnapshot!!.value == 1L){
+            override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                    //var p1 = mutableData.value as Long
+                    var dataList : ArrayList<Map<String,String>> = ArrayList()
+                    var mapData = HashMap<String,String>()
+                    var winnerPrice = mutableData.child("price").value
+                    Log.d("price",value.toString()+"="+spinnerPrice.toString())
+                    //if(tempVersion == version){
+                    //mutableData.child("version").value = version
+
                     var versionWinners = parseInt(version.toString())+1
-                    //mHistory!!.child(Date().toString()).setValue(auctionRealtimeDatabase)
-//                        mPerson!!.child("winner").child("bidTime").setValue(ServerValue.TIMESTAMP)
-//                        mPerson!!.child("winner").child("price").setValue(spinner)
-//                        mPerson!!.child("winner").child("bidder").setValue(userId)
-//                        mPerson!!.child("winner").child("version").setValue(versionWinners)
-                    mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
-                    mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
-                    mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
+                    ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
                     var mapWinner =  HashMap<String, Any>()
                     mapWinner.put("bidTime",ServerValue.TIMESTAMP)
                     mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
                     mapWinner.put("price", auctionRealtimeDatabase.price!!)
                     mapWinner.put("version",versionWinners)
                     mPerson!!.child("winner").setValue(mapWinner)
-
+                    ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
+                    ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
                     var map = HashMap<String?, Any?>()
                     map.put("bidtime", ServerValue.TIMESTAMP)
                     map.put("bidder", auctionRealtimeDatabase.bidder!!)
                     map.put("firstTime", auctionRealtimeDatabase.firstTime!!)
                     map.put("price", auctionRealtimeDatabase.price!!)
-
                     mHistory!!.push().setValue(map)
-
-
-                    val handler = Handler()
-                handler.postDelayed(Runnable {
-                    mPerson!!.child("member").child("number").setValue(0)
-                }, 1000)
-                }else{
-                    Toast.makeText(baseContext,"Transaction Failed",Toast.LENGTH_LONG).show()
-
-
-                   // mPerson!!.child("member").child("number").setValue(0)
-                }
-
-            }
-
-            override fun doTransaction(mutableData: MutableData): Transaction.Result {
-                //var p = mutableData.child(userId.toString()).child("price").value
-                    var p1 = mutableData.value as Long
-                    var dataList : ArrayList<Map<String,String>> = ArrayList()
-                    var mapData = HashMap<String,String>()
+                    ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
+                    /////////////////////////////////// insert data member to firebase////////////////////////////////
+                    mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
+                    mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
+                    mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
+                    /////////////////////////////////// insert data member to firebase////////////////////////////////
+                        return Transaction.success(mutableData)
+                    //}else{
+                        //mutableData.value = version
+                        //return Transaction.abort()
+                    //}
                     //var versionWinner = mutableData.child("version").value
                     //var priceWinner = mutableData.child("price").value
                     //Log.d("version",versionWinner.toString())
@@ -412,15 +404,15 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 //                }else{
 //                    mutableData.value = p+1
 //                }
-                    if(p1 == 0L){
-                    p1 = 1
-                    mutableData.value = p1
-                    return Transaction.success(mutableData)
-                }else{
-                   p1 = 0
-                    mutableData.value = p1
-                   return Transaction.success(mutableData)
-                }
+//                    if(p1 == 0L){
+//                    p1 = 1
+//                    mutableData.value = p1
+//                    return Transaction.success(mutableData)
+//                }else{
+//                   p1 = 0
+//                    mutableData.value = p1
+//                   return Transaction.success(mutableData)
+//                }
 //                if(spinnerPrice.equals(null)){
 //                    p = p1
 //                }else{
@@ -447,6 +439,23 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 //
 //                }
 
+
+            }
+
+            override fun onComplete(p0: DatabaseError?, p1: Boolean, dataSnapshot : DataSnapshot?) {
+//                if(tempVersion == )
+                //Log.d("version = " , tempVersion.toString() +"=" + dataSnapshot!!.value.toString())
+                //if(tempVersion == dataSnapshot.child("version").value){
+
+
+//                    val handler = Handler()
+//                    handler.postDelayed(Runnable {
+//                        mPerson!!.child("member").child("number").setValue(0)
+//                    }, 1000)
+                //}else{
+                    //Toast.makeText(baseContext,"Transaction Failed",Toast.LENGTH_LONG).show()
+
+                //}
 
             }
 

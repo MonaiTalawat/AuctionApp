@@ -62,12 +62,13 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     var tempValue: String? = null
     var tempBidTime: Long? = null
     var state: Int? = 0
+    var stateTime : Long? = 0L
     var tempPrice: Long? = 0L
     var tempVersion : Long? = null
     var task  =null
     var version : Long? = null
     var mapMember : Map<String,Member>? = HashMap<String,Member>()
-    var timer = object : CountDownTimer(300000, 1000) {
+    var timer = object : CountDownTimer(30000, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
             textView_time.text = (millisUntilFinished / 1000).toString()
@@ -120,85 +121,10 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         image_auction!!.setImageResource(resource)
         callWebServiceForCheckUserRegisterAuction(licenseCarId, userId)
 
-      //  mDatabase!!.child("winner").child("member").child(userId.toString()).child("firstTime").setValue(ServerValue.TIMESTAMP)
+        mDatabase!!.child("winner").child("member").child(userId.toString()).child("firstTime").setValue(ServerValue.TIMESTAMP)
         mPerson = FirebaseDatabase.getInstance().reference.child(licenseCarId.toString()).child("person")
         mHistory = FirebaseDatabase.getInstance().reference.child(licenseCarId.toString()).child("history")
         mWinner = FirebaseDatabase.getInstance().reference.child(licenseCarId.toString()).child("winner")
-
-//        if(state == 0){
-//
-//            Log.d("state",state.toString())
-//            state = 1
-//            mWinner!!.addChildEventListener(object : ChildEventListener{
-//                override fun onCancelled(p0: DatabaseError) {
-//
-//                }
-//
-//                override fun onChildMoved(dataSnapshot: DataSnapshot, p1: String?) {
-//                    Log.d("datasnapshotMove",dataSnapshot.toString())
-//                }
-//
-//                override fun onChildChanged(dataSnapshot : DataSnapshot, p1: String?) {
-//                    Log.d("datasnapshotChange",dataSnapshot.toString())
-////                    if(state == 0) {
-////                        var data = dataSnapshot.value as Map<String, Any>?
-////                        var user = data!!.get(userId.toString()) as Map<String, Any>?
-////                        firstTime = user!!.get("firstTime") as Long?
-////                        state = 1
-////                    }else{
-//                        value = dataSnapshot.value as Long?
-//                        price[0] = parseInt(value.toString()) + 500
-//                        price[1] = parseInt(value.toString()) + 1000
-//                        price[2] = parseInt(value.toString()) + 1500
-//                        price[3] = parseInt(value.toString()) + 2000
-//                        price[4] = parseInt(value.toString()) + 2500
-//                        spinnerAuction.setSelection(0, true)
-//                        aa.notifyDataSetChanged()
-//                        spinnerPrice = price[0].toString()
-//                        finalPrice.text = value.toString()
-//                    //}
-//
-//
-////
-//                }
-//
-//                override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
-//                    Log.d("datasnapshotAdd",dataSnapshot.toString())
-//                    //firstTime = dataSnapshot.value as Long?
-//                }
-//
-//                override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-//                    Log.d("datasnapshotRemove",dataSnapshot.toString())
-//                }
-//
-//            })
-        //}
-//        if(state == 1){
-//            Log.d("state",state.toString())
-//
-//            mWinner!!.addValueEventListener(object : ValueEventListener{
-//                override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                    Log.d("dataSnapshot",dataSnapshot.toString())
-//                    firstTime = dataSnapshot.child("member").child(userId.toString()).child("firstTime").value as Long?
-//                    value = dataSnapshot.child("price").value.toString().toLong()
-//
-//                    price[0] = parseInt(value.toString()) + 500
-//                    price[1] = parseInt(value.toString()) + 1000
-//                    price[2] = parseInt(value.toString()) + 1500
-//                    price[3] = parseInt(value.toString()) + 2000
-//                    price[4] = parseInt(value.toString()) + 2500
-//                    spinnerAuction.setSelection(0, true)
-//                    aa.notifyDataSetChanged()
-//                    spinnerPrice = price[0].toString()
-//                    finalPrice.text = value.toString()
-//                }
-//
-//                override fun onCancelled(p0: DatabaseError) {
-//
-//                }
-//            })
-//        }
-
 
         statusBidTime = 0L
 
@@ -223,102 +149,82 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     id = dataSnapshot.child("bidder").value as Long?
                     if(state == 0) {
                         if (userId.toLong() == id) {
-                            finalPrice.setTextColor(Color.GREEN)
-                            Log.d("color", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
-                        } else {
-                            finalPrice.setTextColor(Color.RED)
-                            Log.d("color", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
-                        }
-                        state = 1
+                                    finalPrice.setTextColor(Color.GREEN)
+                                    Log.d("colorLis", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                            } else {
+                                finalPrice.setTextColor(Color.RED)
+                                Log.d("colorLis", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                            }
+
                     }else{
-
                     }
-//                }
-                //Log.d("id", id.toString())
+                tempPrice = value
 
-//                btn_auction.isEnabled = false
-//                btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
-//                val handler = Handler()
-//                handler.postDelayed(Runnable {
-//                    btn_auction.isEnabled = true
-//                    btn_auction.setBackgroundColor(Color.parseColor("#1E90FF"))
-//                }, 2000)
-//                value = dataSnapshot.child("price").value.toString().toLong()
-//
-//                price[0] = parseInt(value.toString()) + 500
-//                price[1] = parseInt(value.toString()) + 1000
-//                price[2] = parseInt(value.toString()) + 1500
-//                price[3] = parseInt(value.toString()) + 2000
-//                price[4] = parseInt(value.toString()) + 2500
-//                spinnerAuction.setSelection(0, true)
-//                aa.notifyDataSetChanged()
-//                spinnerPrice = price[0].toString()
-//                finalPrice.text = value.toString()
-//                bidTime = dataSnapshot.child("bidTime").value as Long?
-//
-//                Log.d("bidTime", bidTime.toString())
-//                tempPrice = value!!.toLong()
-//                if (tempBidTime == null) {
-//                tempPrice = value!!.toLong()
-//                } else if (tempBidTime == bidTime) {
-//                tempPrice = value!!.toLong()
-//
-//                } else {
-//                if (totalTime!! > 30000) {
-//                timer.cancel()
-//                } else {
-//                timer.start()
-//                Toast.makeText(applicationContext, "version = " + version.toString(), Toast.LENGTH_SHORT).show()
-//                }
-//                }
-//
-//                tempBidTime = bidTime
+                btn_auction.isEnabled = false
+                btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+                val handler = Handler()
+                handler.postDelayed(Runnable {
+                    btn_auction.isEnabled = true
+                    btn_auction.setBackgroundColor(Color.parseColor("#1E90FF"))
+                }, 2000)
+                bidTime = dataSnapshot.child("bidTime").value as Long?
+
+                Log.d("bidTime", bidTime.toString())
+                tempPrice = value!!.toLong()
+                if (tempBidTime == null) {
+                tempPrice = value!!.toLong()
+                } else if (tempBidTime == bidTime) {
+                tempPrice = value!!.toLong()
+
+                } else {
+                if (totalTime!! > 30000) {
+                } else {
+                timer.start()
+                Toast.makeText(applicationContext, "version = " + version.toString(), Toast.LENGTH_SHORT).show()
+                }
+                }
+
+                tempBidTime = bidTime
 
 
 
-//                if (state == 0) {
-//                    mapMember = dataSnapshot.child("member").value as HashMap<String, Member>?
-//                    val mapMemberEntry = mapMember!!.entries
-//                    val mapMemberIterator = mapMemberEntry.iterator()
-//                    val mapMemeberData = HashMap<String, Member>()
-//                    while (mapMemberIterator.hasNext()) {
-//                        var mapMemberMapEntry = mapMemberIterator.next()
-//                Log.d("mapUser",mapUserMapEntry.value.toString())
-//                var mapSubUser = mapUserMapEntry.value as HashMap<String,Member>?
-//                        mapMemeberData.put(mapMemberMapEntry.key, mapMemberMapEntry.value)
-//
-//                    }
-//                    var mapUserId = mapMemeberData.get(userId.toString()) as HashMap<String, Member>?
-//                    firstTime = mapUserId!!["firstTime"].toString().toLong()
-//                    leftTime = firstTime!!.minus(tempBidTime!!)
-//                    leftTime = 30000.minus(leftTime!!)
-//                    //Toast.makeText(applicationContext,"bidTime = "+ tempBidTime.toString(),Toast.LENGTH_LONG).show()
-//                    timers = object : CountDownTimer(leftTime!!, 1000) {
-//                        override fun onTick(millisUntilFinished: Long) {
-//                            textView_time.text = (millisUntilFinished / 1000).toString()
-//                        }
-//
-//                        override fun onFinish() {
-//                            textView_time.text = "Done"
-////                            btn_auction.isEnabled = false
-////                            btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
-//                        }
-//                    }.start()
-//                    state = 1
-//                } else {
-//                    if (tempValue.equals(null)) {
-//                    } else if ((value.toString()) == tempValue) {
-//                    } else {
-//                        tempValue = value.toString()
-//                        timers.cancel()
-//                        timer.start()
-//                    }
-//                }
+                if (stateTime!! == 0L) {
+                    firstTime = dataSnapshot.child("member").child(userId.toString()).child("firstTime").value as Long?
+                    leftTime = firstTime!!.minus(tempBidTime!!)
+                    leftTime = 30000.minus(leftTime!!)
+                    //Toast.makeText(applicationContext,"bidTime = "+ tempBidTime.toString(),Toast.LENGTH_LONG).show()
+                    timers = object : CountDownTimer(leftTime!!, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            textView_time.text = (millisUntilFinished / 1000).toString()
+                        }
 
+                        override fun onFinish() {
+                            textView_time.text = "Done"
+                            btn_auction.isEnabled = false
+                            btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+                        }
+                    }.start()
+                    stateTime = 1
+                } else {
+                    if (tempValue.equals(null)) {
+                    } else if ((value.toString()) == tempValue) {
+                    } else {
+                        tempValue = value.toString()
+                        timers.cancel()
+                        timer = object : CountDownTimer(30000, 1000) {
 
+                            override fun onTick(millisUntilFinished: Long) {
+                                textView_time.text = (millisUntilFinished / 1000).toString()
+                            }
 
-
-               // tempValue = value.toString()
+                            override fun onFinish() {
+                                textView_time.text = "Done"
+                                btn_auction.isEnabled = false
+                                btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+                            }
+                        }
+                    }
+                }
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -326,108 +232,6 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             }
 
         })
-
-//        mPerson!!.addValueEventListener(object : ValueEventListener{
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                //Log.d("", "mPerson!!.addValueEventListener")
-//                btn_auction.isEnabled = false
-//                btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
-//                val handler = Handler()
-//                handler.postDelayed(Runnable {
-//                    btn_auction.isEnabled = true
-//                    btn_auction.setBackgroundColor(Color.parseColor("#1E90FF"))
-//                }, 2000)
-//                value = dataSnapshot.child("winner").child("price").value.toString().toLong()
-//                version = dataSnapshot.child("winner").child("version").value as Long?
-//
-//                price[0] = parseInt(value.toString()) + 500
-//                price[1] = parseInt(value.toString()) + 1000
-//                price[2] = parseInt(value.toString()) + 1500
-//                price[3] = parseInt(value.toString()) + 2000
-//                price[4] = parseInt(value.toString()) + 2500
-//                spinnerAuction.setSelection(0, true)
-//                aa.notifyDataSetChanged()
-//                spinnerPrice = price[0].toString()
-//                finalPrice.text = value.toString()
-//
-////                var id  = dataSnapshot.child("winner").child("bidder").value as Long?
-////                if(userId.toLong() == id){
-////                    finalPrice.setTextColor(Color.GREEN)
-////                }else{
-////                    finalPrice.setTextColor(Color.RED)
-////                }
-//
-//                bidTime = dataSnapshot.child("winner").child("bidTime").value as Long?
-//
-//                Log.d("bidTime", bidTime.toString())
-//                //tempPrice = value!!.toLong()
-//                if (tempBidTime == null) {
-//                    //tempPrice = value!!.toLong()
-//                } else if (tempBidTime == bidTime) {
-//                    //tempPrice = value!!.toLong()
-//
-//                } else {
-//                    if (totalTime!! > 30000) {
-//                        //timer.cancel()
-//                    } else {
-//                        timer.start()
-//                        //Toast.makeText(applicationContext, "version = " + version.toString(), Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                tempBidTime = bidTime
-//                val mapUser = dataSnapshot.child("member").value as HashMap<String, Member>?
-//                val mapUserEntry = mapUser!!.entries
-//                val mapUserIterator = mapUserEntry.iterator()
-//                val mapDataUser = HashMap<String, Member>()
-//                while (mapUserIterator.hasNext()) {
-//                    var mapUserMapEntry = mapUserIterator.next()
-//                    //Log.d("mapUser",mapUserMapEntry.value.toString())
-//                    //var mapSubUser = mapUserMapEntry.value as HashMap<String,Member>?
-//                    mapDataUser.put(mapUserMapEntry.key, mapUserMapEntry.value)
-//
-//                }
-//                var mapUserId = mapDataUser.get(userId.toString()) as HashMap<String, Member>?
-//                firstTime = mapUserId!!["firstTime"].toString().toLong()
-//
-//
-//
-//                if (state == 0) {
-//                    leftTime = firstTime!!.minus(tempBidTime!!)
-//                    leftTime = 30000.minus(leftTime!!)
-//                    //Toast.makeText(applicationContext,"bidTime = "+ tempBidTime.toString(),Toast.LENGTH_LONG).show()
-//                    timers = object : CountDownTimer(leftTime!!, 1000) {
-//                        override fun onTick(millisUntilFinished: Long) {
-//                            textView_time.text = (millisUntilFinished / 1000).toString()
-//                        }
-//
-//                        override fun onFinish() {
-//                            textView_time.text = "Done"
-////                            btn_auction.isEnabled = false
-////                            btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
-//                        }
-//                    }.start()
-//                    state = 1
-//                } else {
-//                    if (tempValue.equals(null)) {
-//                    } else if ((value.toString()) == tempValue) {
-//                    } else {
-//                        tempValue = value.toString()
-//                        timers.cancel()
-//                        timer.start()
-//                    }
-//                }
-//
-//
-//
-//
-//                tempValue = value.toString()
-
-//            }
-//
-//            override fun onCancelled(p0: DatabaseError) {
-//
-//            }
-//        })
 
         history = mHistory!!.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -457,76 +261,9 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             }
         })
         btn_auction.setOnClickListener(View.OnClickListener {
-           // tempVersion = version
-            //tempPrice = value!!.toLong()
-            //mPerson!!.child("winner").child("price").setValue(spinnerPrice.toString())
             var auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toString(), "0", status, firstTime.toString(), spinnerPrice!!.toLong())
-//            var mData = mDatabase!!.child("person").child("winner")
-//            tranSacTionForAuction(mData,userId,licenseCarId,auctionRealtimeDatabase,spinnerPrice,tempVersion)
-//            var versionWinners = parseInt(version.toString())+1
-//            ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
-//             var mapWinner =  HashMap<String, Any?>()
-
-            var time = ServerValue.TIMESTAMP
-//                Log.d("time",time.toString())
-
-
-            var mapWinner =  HashMap<String, Any?>()
-            //mapWinner.put("bidTime",ServerValue.TIMESTAMP)
-            //mapWinner.put("bidTime",1538106931421)
-            mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
-            mapWinner.put("price", auctionRealtimeDatabase.price)
-            //mPerson!!.child("winner").setValue(mapWinner)
-            //var mapMemberWinner = HashMap<String,Map<String,Member>?>()
-            //mapWinner.put("member",mapMember)
-//            var complete = DatabaseReference.CompletionListener(object : DatabaseReference.CompletionListener, (DatabaseError?, DatabaseReference) -> Unit {
-//                override fun invoke(p1: DatabaseError?, p2: DatabaseReference) {
-//
-//                }
-//
-//                override fun onComplete(databaseError: DatabaseError?, p1: DatabaseReference) {
-//                    if(databaseError != null){
-//                        Log.d("error",databaseError.message)
-//                    }else{
-//
-//                    }
-//                }
-//
-//            })
-            mWinner!!.setValue(mapWinner)
-//            var task = mWinner!!.setValue(mapWinner)
-//            task.addOnCompleteListener(this,object : OnCompleteListener<Void>  {
-//                override fun onComplete(tasks: Task<Void>) {
-//
-//                    if(!tasks.isSuccessful) {
-//                        Log.i("**********", "BUT IT FAILED", tasks.getException())
-//                        finalPrice.setTextColor(Color.RED)
-//                        Log.d("color", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
-//                    }else{
-//                        Log.d("**********", "success")
-//                        var result = tasks.result
-//                    }
-//                }
-
-            //})
-
-
-//            ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
-//
-//            ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
-//            var map = HashMap<String?, Any?>()
-//            map.put("bidtime", ServerValue.TIMESTAMP)
-//            map.put("bidder", auctionRealtimeDatabase.bidder!!)
-//            map.put("firstTime", auctionRealtimeDatabase.firstTime!!)
-//            map.put("price", auctionRealtimeDatabase.price!!)
-//            mHistory!!.push().setValue(map)
-//            ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
-//
-//            /////////////////////////////////// insert data member to firebase////////////////////////////////
-//            mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
-//            mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
-//            mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
-//            /////////////////////////////////// insert data member to firebase////////////////////////////////
+            var mData = mDatabase!!.child("winner")
+            tranSacTionForAuction(mData,userId,licenseCarId,auctionRealtimeDatabase,spinnerPrice,tempVersion)
         })
 
     }
@@ -590,29 +327,16 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     fun tranSacTionForAuction(mData: DatabaseReference, userId: Int, licenseCarId: Long, auctionRealtimeDatabase: AuctionRealtimeDatabase, spinner: String?, tempVersion: Long?) {
         mData.runTransaction(object : Transaction.Handler{
             override fun doTransaction(mutableData: MutableData): Transaction.Result {
-                    //var p1 = mutableData.value as Long
-                    var dataList : ArrayList<Map<String,String>> = ArrayList()
-                    var mapData = HashMap<String,String>()
-                    var winnerPrice = mutableData.child("price").value
-                    Log.d("price",value.toString()+"="+spinnerPrice.toString())
-                    //if(tempVersion == version){
-                    //mutableData.child("version").value = version
-
-                /////////////////////////////////// insert data member to firebase////////////////////////////////
-//                mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
-//                mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
-//                mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
-                /////////////////////////////////// insert data member to firebase////////////////////////////////
-                    ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
-
+                    /////////////////////////////////// insert data member to firebase////////////////////////////////
+                    mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
+                    mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
+                    mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
+                    /////////////////////////////////// insert data member to firebase////////////////////////////////
+                    ///////////////////////////////////map Winner to fitrbase////////////////////////////////////////
                     var mapWinner =  HashMap<String, Any?>()
                     mapWinner.put("bidTime",ServerValue.TIMESTAMP)
                     mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
                     mapWinner.put("price", auctionRealtimeDatabase.price!!)
-                    //mPerson!!.child("winner").setValue(mapWinner)
-                    //var mapMemberWinner = HashMap<String,Map<String,Member>?>()
-                    //mapWinner.put("member",mapMember)
-                    mWinner!!.setValue(mapWinner)
                     ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
                     ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
                     var map = HashMap<String?, Any?>()
@@ -622,116 +346,32 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     map.put("price", 250000)
                     mHistory!!.push().setValue(map)
 
-                    ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
-                        return Transaction.success(mutableData)
-                    //}else{
-                        //mutableData.value = version
-                        //return Transaction.abort()
-                    //}
-                    //var versionWinner = mutableData.child("version").value
-                    //var priceWinner = mutableData.child("price").value
-                    //Log.d("version",versionWinner.toString())
-                    //if(tempVersion == version || value.toString().toLong() < spinner.toString().toLong()){
-                        //var versionWinners = parseInt(version.toString())+1
-                        //mHistory!!.child(Date().toString()).setValue(auctionRealtimeDatabase)
-//                        mPerson!!.child("winner").child("bidTime").setValue(ServerValue.TIMESTAMP)
-//                        mPerson!!.child("winner").child("price").setValue(spinner)
-//                        mPerson!!.child("winner").child("bidder").setValue(userId)
-//                        mPerson!!.child("winner").child("version").setValue(versionWinners)
-//                        mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
-//                        mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
-//                        mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
-//                        var mapWinner =  HashMap<String, Any>()
-//                        mapWinner.put("bidTime",ServerValue.TIMESTAMP)
-//                        mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
-//                        mapWinner.put("price", auctionRealtimeDatabase.price!!)
-//                        mapWinner.put("version",versionWinners)
-//                        mPerson!!.child("winner").setValue(mapWinner)
-//
-//                        var map = HashMap<String?, Any?>()
-//                        map.put("bidtime", ServerValue.TIMESTAMP)
-//                        map.put("bidder", auctionRealtimeDatabase.bidder!!)
-//                        map.put("firstTime", auctionRealtimeDatabase.firstTime!!)
-//                        map.put("price", auctionRealtimeDatabase.price!!)
-
-                       // mHistory!!.push().setValue(map)
-
-//                        mHistory!!.child("bidtime").setValue(ServerValue.TIMESTAMP)
-                        //mHistory!!.addChildEventListener()
-//
-//                        return Transaction.success(mutableData)
-//                    }else{
-//                        return Transaction.abort()
-//                    }
-
-//                if(p == null){
-//                    mutableData.value = 1
-//                }else{
-//                    mutableData.value = p+1
-//                }
-//                    if(p1 == 0L){
-//                    p1 = 1
-//                    mutableData.value = p1
-//                    return Transaction.success(mutableData)
-//                }else{
-//                   p1 = 0
-//                    mutableData.value = p1
-//                   return Transaction.success(mutableData)
-//                }
-//                if(spinnerPrice.equals(null)){
-//                    p = p1
-//                }else{
-//                    p = spinnerPrice
-//
-//                }
-//                mapData.put(userId.toString(),p.toString())
-//                mapData.put("number",p1.toString())
-//                dataList.add(mapData)
-
-//                if(p!!.toLong() == tempPrice){
-//                    mDatabase!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
-//                    mDatabase!!.child("history").child(Date().toString()).setValue(auctionRealtimeDatabase)
-//                    mData.child("bidTime").setValue(ServerValue.TIMESTAMP)
-//                    mData.child("price").setValue(spinnerPrice)
-//                    mData.child("bidder").setValue(userId)
-//                    mDatabase!!.child("member").child(userId.toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
-//                    mDatabase!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
-//                    mDatabase!!.child("history").child(Date().toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
-//                    tempPrice = p.toLong()
-//                }else{
-//                    Toast.makeText(baseContext,"can't save",Toast.LENGTH_LONG).show()
-//                    tempPrice = p.toLong()
-//
-//                }
+                    ///////////////////////////////////map history to fitrbase////////////////////////////////////////
+                    mutableData!!.setValue(mapWinner)
+                    state = 1
+                    return Transaction.success(mutableData)
 
 
             }
 
             override fun onComplete(p0: DatabaseError?, p1: Boolean, dataSnapshot : DataSnapshot?) {
-//                if(tempVersion == )
-                //Log.d("version = " , tempVersion.toString() +"=" + dataSnapshot!!.value.toString())
-                //if(tempVersion == dataSnapshot.child("version").value){
-
-
-//                    val handler = Handler()
-//                    handler.postDelayed(Runnable {
-//                        mPerson!!.child("member").child("number").setValue(0)
-//                    }, 1000)
-                //}else{
-                    //Toast.makeText(baseContext,"Transaction Failed",Toast.LENGTH_LONG).show()
-
-                //}
-
+                var memberId = dataSnapshot!!.child("bidder").value as Long?
+                if (userId.toLong() == memberId) {
+                    finalPrice.setTextColor(Color.GREEN)
+                    Log.d("colorComplete", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                } else {
+                    finalPrice.setTextColor(Color.RED)
+                    Log.d("colorComplete", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                }
+                state = 0
             }
-
-            //mutable.setValue(p);
 
         })
     }
 
     override fun onStop() {
         super.onStop()
-        //mDatabase.removeEventListener()
+        state = 0
         mWinner!!.removeEventListener(winner!!)
         mHistory!!.removeEventListener(history!!)
     }

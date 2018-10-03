@@ -220,6 +220,7 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     mHandler.postDelayed(SCROLLING_RUNNABLE_AUCTION, 3000)
 
                 }else{
+
                     Toast.makeText(applicationContext,"failed", Toast.LENGTH_LONG).show()
                 }
             }

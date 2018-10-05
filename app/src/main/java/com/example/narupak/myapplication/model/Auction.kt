@@ -12,16 +12,18 @@ class Auction {
     var number: String? = null
     var licenseCarId : Long? = null
     var firstpriceLicenseCar : Long? = null
+    var status : String? = null
 
     constructor(imgUrl: String?) {
         this.imgUrl = imgUrl
     }
 
-    constructor(seq: Long?, imageLicenseCar: String?, number: String?, firstpriceLicenseCar: Long?) {
+    constructor(seq: Long?, imageLicenseCar: String?, number: String?, firstpriceLicenseCar: Long?, status: String?) {
         this.seq = seq
         this.imageLicenseCar = imageLicenseCar
         this.number = number
         this.firstpriceLicenseCar = firstpriceLicenseCar
+        this.status = status
     }
 
 

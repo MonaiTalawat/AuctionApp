@@ -29,11 +29,13 @@ class AuctionAdapter : RecyclerView.Adapter<AuctionViewholder> {
     var auction : ArrayList<Auction>? = null
     var type_page : String? = null
     var userId : Int? = null
+    var status : String? = null
 
-    constructor(auction: ArrayList<Auction>?, type_page: String?,userId : Int?) : super() {
+    constructor(auction: ArrayList<Auction>?, type_page: String?, userId: Int?, status: String?) : super() {
         this.auction = auction
         this.type_page = type_page
         this.userId = userId
+        this.status = status
     }
 
 
@@ -62,11 +64,23 @@ class AuctionAdapter : RecyclerView.Adapter<AuctionViewholder> {
                 holder.itemView.context.startActivity(intent)
             }
             if(type_page == "myauction"){
-                var intent = Intent(holder.itemView.context, DetailActivity::class.java)
-                intent.putExtra("licenseCarId",auctions.seq)
-                intent.putExtra("user_id",userId)
-                intent.putExtra("typwPage","myauction")
-                holder.itemView.context.startActivity(intent)
+                if(auctions.status!! == "1") {
+                    var intent = Intent(holder.itemView.context, DetailActivity::class.java)
+                    intent.putExtra("licenseCarId", auctions.seq)
+                    intent.putExtra("user_id", userId)
+                    intent.putExtra("typePage", "myauction")
+                    intent.putExtra("status", status)
+                    holder.itemView.context.startActivity(intent)
+                }else{
+                    var intent = Intent(holder.itemView.context, AuctionActivity::class.java)
+                    intent.putExtra("licenseCarId", auctions.seq)
+                    intent.putExtra("user_id", userId)
+                    intent.putExtra("typePage", "myauction")
+                    intent.putExtra("image",auctions.imageLicenseCar)
+                    intent.putExtra("status", status)
+                    holder.itemView.context.startActivity(intent)
+                }
+
             }
         })
 

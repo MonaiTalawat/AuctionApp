@@ -6,17 +6,20 @@ package com.example.narupak.myapplication.model
 class AuctionRealtimeDatabase {
     var bidder : String? = null
     var bidtime : String? = null
-    var price : String? = null
-    var registerlicenseCar : HashMap<String,Mapdata>? = null
+    var status : String? = null
+    var firstTime : String? = null
+    var price : Long? = null
 
 
     constructor()
-
-    constructor(bidder: String?, bidtime: String?, price: String?) {
+    constructor(bidder: String?, bidtime: String?, status: String?, firstTime: String?, price: Long?) {
         this.bidder = bidder
         this.bidtime = bidtime
+        this.status = status
+        this.firstTime = firstTime
         this.price = price
     }
+
 
 }
 

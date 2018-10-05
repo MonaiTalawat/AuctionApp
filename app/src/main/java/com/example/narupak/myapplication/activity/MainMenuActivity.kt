@@ -164,6 +164,7 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         var image : String? = null
         var seq : Long? = null
         var firstprice : Long? = null
+        var status : String? = null
         val call = apiService.queryLicenseCarByStatus()
         Log.d("REQUEST", call.toString() + "")
         call.enqueue(object : retrofit2.Callback<List<LicenseCar>>{
@@ -175,12 +176,13 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                         image = carlist.imageLicenseCar
                         seq = carlist.seq
                         firstprice = carlist.firstprice
-                        val licensecar_auction = Auction(seq,image,number,firstprice)
+                        status = carlist.status
+                        val licensecar_auction = Auction(seq,image,number,firstprice,status)
                         listcar!!.add(licensecar_auction)
                     }
                     val recyclerview_auction_main = findViewById<View?>(R.id.recyclerView_auction) as RecyclerView?
                     val linearLayoutManager = LinearLayoutManager(context)
-                    adapterAuction = AuctionAdapter(listcar,"auction",userId)
+                    adapterAuction = AuctionAdapter(listcar,"auction",userId,status)
                     recyclerview_auction_main!!.adapter = adapterAuction
                     linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
                     recyclerView_auction.layoutManager = linearLayoutManager
@@ -237,6 +239,7 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         var number : String? = null
         var image : String? = null
         var seq : Long? = null
+        var status : String? = null
         val call = apiService.queryRegisterLicenseCarByStatus()
         Log.d("REQUEST", call.toString() + "")
         call.enqueue(object : retrofit2.Callback<List<LicenseCar>>{
@@ -247,12 +250,13 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                         number = carlist.number
                         image = carlist.imageLicenseCar
                         seq = carlist.seq
-                        val licensecar_auction = Auction(seq,image,number,null)
+                        status = carlist.status
+                        val licensecar_auction = Auction(seq,image,number,null,status)
                         listcar.add(licensecar_auction)
                     }
                     val recyclerview_register = findViewById<View>(R.id.recyclerview_register) as RecyclerView?
                     val linearLayoutManager_register = LinearLayoutManager(context)
-                    adapterRegister = AuctionAdapter(listcar,"register",user_id)
+                    adapterRegister = AuctionAdapter(listcar,"register",user_id,status)
                     recyclerview_register!!.adapter = adapterRegister
                     linearLayoutManager_register.orientation = LinearLayoutManager.HORIZONTAL
                     recyclerview_register.layoutManager = linearLayoutManager_register
@@ -305,6 +309,7 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val apiService = ApiInterface.create()
         val user = User(user_id)
         val users = GenericRequest<User>()
+        var status  : String?  = null
         users.request = user
         val call = apiService.myAuction(users)
         Log.d("REQUEST", call.toString() + "")
@@ -319,14 +324,14 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                         //Log.d("image",image)
                         val number = objects.number
                         val seq = list.licenseCarId
-
+                        status = list.licenseCar!!.status
                         //var licenseCarId = objects.seq
-                        val licensecar_auction = Auction(seq,image,number,null)
+                        val licensecar_auction = Auction(seq,image,number,null,status)
                         listlicenseCar.add(licensecar_auction)
                     }
                     val myrecyclerview = findViewById<View>(R.id.myrecyclerview) as RecyclerView?
                     val mylinearLayoutmanager = LinearLayoutManager(context)
-                    adapter_myauction = AuctionAdapter(listlicenseCar,"myauction",user_id)
+                    adapter_myauction = AuctionAdapter(listlicenseCar,"myauction",user_id,status)
                     myrecyclerview!!.adapter = adapter_myauction
                     mylinearLayoutmanager.orientation = LinearLayoutManager.HORIZONTAL
 

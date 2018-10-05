@@ -61,14 +61,14 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     var leftTime: Long? = null
     var tempValue: String? = null
     var tempBidTime: Long? = null
-    var state: Int? = 0
+    var statrPriceColor: Int? = 0
     var stateTime : Long? = 0L
     var tempPrice: Long? = 0L
     var tempVersion : Long? = null
     var task  =null
     var version : Long? = null
     var mapMember : Map<String,Member>? = HashMap<String,Member>()
-    var timer = object : CountDownTimer(30000, 1000) {
+    var timerClick = object : CountDownTimer(30000, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
             textView_time.text = (millisUntilFinished / 1000).toString()
@@ -82,7 +82,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         }
     }
 
-    var timers = object : CountDownTimer(totalTime!!, 1000) {
+    var timerFirst = object : CountDownTimer(totalTime!!, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
             textView_time.text = (millisUntilFinished / 1000).toString()
@@ -114,26 +114,47 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         val bundle = intent.extras
         val userId = bundle.getInt("user_id")
         val licenseCarId = bundle.getLong("licenseCarId")
+        val status = bundle.getString("status")
+        var typePage = bundle.getString("typePage")
+        if(status == "3"){
+            btn_auction.isEnabled = false
+            btn_auction.text = "สิ้้นสุดการประมูล"
+            btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+        }
         mDatabase = mDatabase!!.child(licenseCarId.toString())
         var firstprice = bundle.getLong("firstprice")
         val image = "drawable/" + bundle.getString("image")
         val resource = image_auction!!.getResources().getIdentifier(image, null, image_auction!!.getContext().getPackageName())
         image_auction!!.setImageResource(resource)
         callWebServiceForCheckUserRegisterAuction(licenseCarId, userId)
-
-        mDatabase!!.child("winner").child("member").child(userId.toString()).child("firstTime").setValue(ServerValue.TIMESTAMP)
         mPerson = FirebaseDatabase.getInstance().reference.child(licenseCarId.toString()).child("person")
         mHistory = FirebaseDatabase.getInstance().reference.child(licenseCarId.toString()).child("history")
         mWinner = FirebaseDatabase.getInstance().reference.child(licenseCarId.toString()).child("winner")
+        callWebServiceForFirstTimeStamp(userId.toLong())
 
-        statusBidTime = 0L
 
         winner = mWinner!!.addValueEventListener(object  : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
 
-                    Log.d("datasnapshot1", dataSnapshot.toString())
-                    value = dataSnapshot.child("price").value.toString().toLong()
+                Log.d("datasnapshot1", dataSnapshot.toString())
+                value = dataSnapshot.child("price").value.toString().toLong()
+                if (value == null) {
+                    value = 0
+                }
+                id = dataSnapshot.child("bidder").value as Long?
+                if (value == null) {
+                    id = 0
+                }
+                bidTime = dataSnapshot.child("bidTime").value as Long?
+                if (bidTime == null) {
+                    bidTime = 0
+                }
+                firstTime = dataSnapshot.child("member").child(userId.toString()).child("firstTime").value as Long?
+                if (firstTime == null) {
+                    firstTime = 0
+                }
+                if (statrPriceColor == 0) {
 
                     price[0] = parseInt(value.toString()) + 500
                     price[1] = parseInt(value.toString()) + 1000
@@ -145,74 +166,38 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     spinnerPrice = price[0].toString()
                     finalPrice.text = value.toString()
                     //bidTime = dataSnapshot.child("bidTime").value as Long?
-                    statusBidTime = 0
-                    id = dataSnapshot.child("bidder").value as Long?
-                    if(state == 0) {
-                        if (userId.toLong() == id) {
-                                    finalPrice.setTextColor(Color.GREEN)
-                                    Log.d("colorLis", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
-                            } else {
-                                finalPrice.setTextColor(Color.RED)
-                                Log.d("colorLis", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
-                            }
-
-                    }else{
+                    //statusBidTime = 0
+                    if (userId.toLong() == id) {
+                        finalPrice.setTextColor(Color.GREEN)
+                        //Log.d("colorLis", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                    } else {
+                        finalPrice.setTextColor(Color.RED)
+                        //Log.d("colorLis", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
                     }
-                tempPrice = value
-
+                } else {
+                }
+                //tempPrice = value
                 btn_auction.isEnabled = false
                 btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
-                val handler = Handler()
-                handler.postDelayed(Runnable {
-                    btn_auction.isEnabled = true
-                    btn_auction.setBackgroundColor(Color.parseColor("#1E90FF"))
-                }, 2000)
-                bidTime = dataSnapshot.child("bidTime").value as Long?
-
-                Log.d("bidTime", bidTime.toString())
-                tempPrice = value!!.toLong()
-                if (tempBidTime == null) {
-                tempPrice = value!!.toLong()
-                } else if (tempBidTime == bidTime) {
-                tempPrice = value!!.toLong()
-
-                } else {
-                if (totalTime!! > 30000) {
-                } else {
-                timer.start()
-                Toast.makeText(applicationContext, "version = " + version.toString(), Toast.LENGTH_SHORT).show()
-                }
+                if(status == "Active") {
+                    val handler = Handler()
+                    handler.postDelayed(Runnable {
+                        btn_auction.isEnabled = true
+                        btn_auction.setBackgroundColor(Color.parseColor("#1E90FF"))
+                    }, 2000)
                 }
 
-                tempBidTime = bidTime
-
-
-
-                if (stateTime!! == 0L) {
-                    firstTime = dataSnapshot.child("member").child(userId.toString()).child("firstTime").value as Long?
-                    leftTime = firstTime!!.minus(tempBidTime!!)
-                    leftTime = 30000.minus(leftTime!!)
-                    //Toast.makeText(applicationContext,"bidTime = "+ tempBidTime.toString(),Toast.LENGTH_LONG).show()
-                    timers = object : CountDownTimer(leftTime!!, 1000) {
-                        override fun onTick(millisUntilFinished: Long) {
-                            textView_time.text = (millisUntilFinished / 1000).toString()
-                        }
-
-                        override fun onFinish() {
-                            textView_time.text = "Done"
-                            btn_auction.isEnabled = false
-                            btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
-                        }
-                    }.start()
-                    stateTime = 1
-                } else {
-                    if (tempValue.equals(null)) {
-                    } else if ((value.toString()) == tempValue) {
-                    } else {
-                        tempValue = value.toString()
-                        timers.cancel()
-                        timer = object : CountDownTimer(30000, 1000) {
-
+                //////////////////////////// state firstTime ////////////////////////////////////////
+                if (stateTime == 0L) {
+                    Log.d("first", "first")
+                    //tempPrice = value!!.toLong()
+                    //////////////////////////////////////// tempbidTime  == null firstcome /////////////////////////////////////
+                    if (tempBidTime == null) {
+                        //Log.d("bidTime1",bidTime.toString())
+                        leftTime = firstTime!!.minus(bidTime!!)
+                        leftTime = 30000.minus(leftTime!!)
+                        //Toast.makeText(applicationContext,"bidTime = "+ tempBidTime.toString(),Toast.LENGTH_LONG).show()
+                        timerFirst = object : CountDownTimer(leftTime!!, 1000) {
                             override fun onTick(millisUntilFinished: Long) {
                                 textView_time.text = (millisUntilFinished / 1000).toString()
                             }
@@ -221,10 +206,64 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                 textView_time.text = "Done"
                                 btn_auction.isEnabled = false
                                 btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+                                callWebServiceForUpdateStatusLicenseCar(licenseCarId)
                             }
-                        }
+                        }.start()
                     }
-                }
+                    stateTime = 1
+                    //Log.d("stateTime",stateTime.toString())
+                    //////////////////////////////////////// tempbidTime  == null firstcome /////////////////////////////////////
+
+
+                    //////////////////////////// bidTime != null , stateTime = 1 ////////////////////////////////////////
+                } else {
+                    //////////////////////////// bidTime not change ////////////////////////////////////////
+                        if (tempBidTime == bidTime) {
+
+                        }
+
+                        //////////////////////////// bidTime not change ////////////////////////////////////////
+
+                        //////////////////////////// bidTime change ////////////////////////////////////////
+                        else {
+                            Log.d("click", "click")
+                            timerClick.cancel()
+                            timerFirst.cancel()
+                            timerClick = object : CountDownTimer(30000, 1000) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    textView_time.text = (millisUntilFinished / 1000).toString()
+                                }
+
+                                override fun onFinish() {
+                                    textView_time.text = "Done"
+                                    btn_auction.isEnabled = false
+                                    btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+                                    btn_auction.text = "เสร็จสิ้นการประมูล"
+                                    var winner = WinnerAuction()
+                                    var winnerUserId = dataSnapshot.child("bidder").value as Long?
+                                    var winnerbidTime = dataSnapshot.child("bidTime").value as Long?
+                                    var winnerPrice = dataSnapshot.child("price").value as Long?
+                                    winner.bidder = winnerUserId
+                                    winner.bidTime = winnerbidTime
+                                    winner.price = winnerPrice
+                                    winner.licenseCarId = licenseCarId
+                                    //callWebServiceForUpdateStatusLicenseCar(licenseCarId)
+                                    if(userId.toLong() == id) {
+                                        callWebServiceForSaveAuction(winner)
+                                    }
+                                }
+                            }.start()
+                            //Toast.makeText(applicationContext, "version = " + version.toString(), Toast.LENGTH_SHORT).show()
+                            //stateTime = 0
+                            //stateTime = 1L
+                        }
+                    //////////////////////////// bidTime change ////////////////////////////////////////
+                    }
+                //////////////////////////// bidTime != null , stateTime = 1 ////////////////////////////////////////
+
+                ////////////////////////////set tempBidTime ///////////////////////////////////////////////////////
+                    tempBidTime = bidTime
+                ////////////////////////////set tempBidTime ///////////////////////////////////////////////////////
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -232,6 +271,8 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             }
 
         })
+        //stateTime = 1L
+        Log.d("stateTimeout",stateTime.toString())
 
         history = mHistory!!.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -263,7 +304,88 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         btn_auction.setOnClickListener(View.OnClickListener {
             var auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toString(), "0", status, firstTime.toString(), spinnerPrice!!.toLong())
             var mData = mDatabase!!.child("winner")
-            tranSacTionForAuction(mData,userId,licenseCarId,auctionRealtimeDatabase,spinnerPrice,tempVersion)
+            //tranSacTionForAuction(mData,userId,licenseCarId,auctionRealtimeDatabase,spinnerPrice,tempVersion)
+            val apiService = ApiInterface.create()
+            val call = apiService.currentTimeStamp()
+            call.enqueue(object : retrofit2.Callback<Long> {
+                override fun onResponse(call: Call<Long>?, response: Response<Long>?) {
+                    if(response!!.code() == 200) {
+                        var timeStamp = response.body().toLong()
+
+                        /////////////////////////////////// insert data member to firebase////////////////////////////////
+                        mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
+                        mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(timeStamp)
+                        mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
+                        /////////////////////////////////// insert data member to firebase////////////////////////////////
+                        ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
+
+                        var map = HashMap<String?, Any?>()
+                        map.put("bidtime", timeStamp)
+                        map.put("bidder", auctionRealtimeDatabase.bidder!!)
+                        map.put("firstTime", auctionRealtimeDatabase.firstTime!!)
+                        map.put("price", 250000)
+                        mHistory!!.push().setValue(map)
+
+                        ///////////////////////////////////map history to fitrbase////////////////////////////////////////
+
+                        ///////////////////////////////////map Winner to fitrbase////////////////////////////////////////
+                        var mapWinner =  HashMap<String, Any?>()
+                        mapWinner.put("bidTime",timeStamp)
+                        mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
+                        mapWinner.put("price", auctionRealtimeDatabase.price!!)
+                        //Log.d("map",mapWinner.toString())
+                        statrPriceColor = 1
+                        val task = mWinner!!.setValue(mapWinner)
+                        task.addOnCompleteListener(object : OnCompleteListener<Void> {
+                            override fun onComplete(task: Task<Void>) {
+                                if(task.isSuccessful){
+                                    price[0] = parseInt(value.toString()) + 500
+                                    price[1] = parseInt(value.toString()) + 1000
+                                    price[2] = parseInt(value.toString()) + 1500
+                                    price[3] = parseInt(value.toString()) + 2000
+                                    price[4] = parseInt(value.toString()) + 2500
+                                    spinnerAuction.setSelection(0, true)
+                                    aa.notifyDataSetChanged()
+                                    spinnerPrice = price[0].toString()
+                                    finalPrice.text = value.toString()
+                                    //bidTime = dataSnapshot.child("bidTime").value as Long?
+                                    //statusBidTime = 0
+                                    //Log.d("task","taskComplete")
+                                    finalPrice.setTextColor(Color.GREEN)
+                                    //Log.d("colortask", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                                    statrPriceColor = 0
+                                }else{
+                                    price[0] = parseInt(value.toString()) + 500
+                                    price[1] = parseInt(value.toString()) + 1000
+                                    price[2] = parseInt(value.toString()) + 1500
+                                    price[3] = parseInt(value.toString()) + 2000
+                                    price[4] = parseInt(value.toString()) + 2500
+                                    spinnerAuction.setSelection(0, true)
+                                    aa.notifyDataSetChanged()
+                                    spinnerPrice = price[0].toString()
+                                    finalPrice.text = value.toString()
+                                    //bidTime = dataSnapshot.child("bidTime").value as Long?
+                                    //statusBidTime = 0
+                                    finalPrice.setTextColor(Color.RED)
+                                    //Log.d("colortask", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                                    //Log.d("task","taskFailed")
+                                    statrPriceColor = 0
+                                }
+                            }
+
+                        })
+                        //mutableData!!.setValue(mapWinner)
+                        //state = 1
+                    }else{
+
+                    }
+                }
+                override fun onFailure(call: Call<Long>?, t: Throwable?) {
+
+                }
+
+
+            })
         })
 
     }
@@ -306,13 +428,16 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     }
 
     override fun onBackPressed() {
+        stateTime = 0L
         val bundle = intent.extras
         val userId = bundle.getInt("user_id")
         val intent = Intent(baseContext, MainMenuActivity::class.java)
         intent.putExtra("user_id", userId)
         startActivity(intent)
-//        timer.cancel()
-//        timers.cancel()
+        timerFirst.cancel()
+        timerClick.cancel()
+        mWinner!!.removeEventListener(winner!!)
+        mHistory!!.removeEventListener(history!!)
         finish()
     }
 
@@ -327,28 +452,47 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     fun tranSacTionForAuction(mData: DatabaseReference, userId: Int, licenseCarId: Long, auctionRealtimeDatabase: AuctionRealtimeDatabase, spinner: String?, tempVersion: Long?) {
         mData.runTransaction(object : Transaction.Handler{
             override fun doTransaction(mutableData: MutableData): Transaction.Result {
-                    /////////////////////////////////// insert data member to firebase////////////////////////////////
-                    mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
-                    mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(ServerValue.TIMESTAMP)
-                    mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
-                    /////////////////////////////////// insert data member to firebase////////////////////////////////
-                    ///////////////////////////////////map Winner to fitrbase////////////////////////////////////////
-                    var mapWinner =  HashMap<String, Any?>()
-                    mapWinner.put("bidTime",ServerValue.TIMESTAMP)
-                    mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
-                    mapWinner.put("price", auctionRealtimeDatabase.price!!)
-                    ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
-                    ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
-                    var map = HashMap<String?, Any?>()
-                    map.put("bidtime", ServerValue.TIMESTAMP)
-                    map.put("bidder", auctionRealtimeDatabase.bidder!!)
-                    map.put("firstTime", auctionRealtimeDatabase.firstTime!!)
-                    map.put("price", 250000)
-                    mHistory!!.push().setValue(map)
+                val apiService = ApiInterface.create()
+                val call = apiService.currentTimeStamp()
+                call.enqueue(object : retrofit2.Callback<Long> {
+                    override fun onResponse(call: Call<Long>?, response: Response<Long>?) {
+                        if(response!!.code() == 200) {
+                            var timeStamp = response.body().toLong()
 
-                    ///////////////////////////////////map history to fitrbase////////////////////////////////////////
-                    mutableData!!.setValue(mapWinner)
-                    state = 1
+                            ///////////////////////////////////map Winner to fitrbase////////////////////////////////////////
+                            var mapWinner =  HashMap<String, Any?>()
+                            mapWinner.put("bidTime",timeStamp)
+                            mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
+                            mapWinner.put("price", auctionRealtimeDatabase.price!!)
+                            //Log.d("map",mapWinner.toString())
+                            mWinner!!.setValue(mapWinner)
+                            ///////////////////////////////////map Winner to fitrbase/////////////////////////////////////////
+                            /////////////////////////////////// insert data member to firebase////////////////////////////////
+//                            mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
+//                            mPerson!!.child("member").child(userId.toString()).child("bidtime").setValue(timeStamp)
+//                            mPerson!!.child("member").child(userId.toString()).child("firstTime").setValue(firstTime)
+                            /////////////////////////////////// insert data member to firebase////////////////////////////////
+                            ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
+//                            var map = HashMap<String?, Any?>()
+//                            map.put("bidtime", timeStamp)
+//                            map.put("bidder", auctionRealtimeDatabase.bidder!!)
+//                            map.put("firstTime", auctionRealtimeDatabase.firstTime!!)
+//                            map.put("price", 250000)
+//                            mHistory!!.push().setValue(map)
+
+                            ///////////////////////////////////map history to fitrbase////////////////////////////////////////
+                            //mutableData!!.setValue(mapWinner)
+                            //state = 1
+                        }else{
+
+                        }
+                    }
+                    override fun onFailure(call: Call<Long>?, t: Throwable?) {
+
+                    }
+
+
+                })
                     return Transaction.success(mutableData)
 
 
@@ -356,22 +500,86 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
             override fun onComplete(p0: DatabaseError?, p1: Boolean, dataSnapshot : DataSnapshot?) {
                 var memberId = dataSnapshot!!.child("bidder").value as Long?
-                if (userId.toLong() == memberId) {
+                if (userId.toLong() == id) {
                     finalPrice.setTextColor(Color.GREEN)
-                    Log.d("colorComplete", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                    //Log.d("colorComplete", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
                 } else {
                     finalPrice.setTextColor(Color.RED)
-                    Log.d("colorComplete", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                    //Log.d("colorComplete", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
                 }
-                state = 0
+                //state = 0
             }
 
         })
     }
 
+    fun callWebServiceForUpdateStatusLicenseCar(licenseCarId: Long) {
+        val apiService = ApiInterface.create()
+        val call = apiService.updateStatusLicenseCar(licenseCarId)
+        call.enqueue(object : retrofit2.Callback<LicenseCar> {
+            override fun onResponse(call: Call<LicenseCar>?, response: Response<LicenseCar>?) {
+                if(response!!.code() == 200) {
+                    //Log.d("update","updateComplete")
+                }else{
+
+                }
+            }
+            override fun onFailure(call: Call<LicenseCar>?, t: Throwable?) {
+
+            }
+
+        })
+
+    }
+
+    fun callWebServiceForFirstTimeStamp(userId : Long) : Long{
+        val apiService = ApiInterface.create()
+        val call = apiService.currentTimeStamp()
+        var timeStamp = 0L
+        call.enqueue(object : retrofit2.Callback<Long> {
+            override fun onResponse(call: Call<Long>?, response: Response<Long>?) {
+                if(response!!.code() == 200) {
+                    timeStamp = response.body().toLong()
+                    //Log.d("Time",timeStamp.toString())
+                    mWinner!!.child("member").child(userId.toString()).child("firstTime").setValue(timeStamp)
+                }else{
+
+                }
+            }
+            override fun onFailure(call: Call<Long>?, t: Throwable?) {
+
+            }
+        })
+        return timeStamp
+    }
+
+    fun callWebServiceForSaveAuction(winnerAuction : WinnerAuction){
+        val apiService = ApiInterface.create()
+        var genericRequest = GenericRequest<WinnerAuction>()
+        genericRequest.request = winnerAuction
+        val call = apiService.saveAuction(genericRequest)
+        call.enqueue(object : retrofit2.Callback<WinnerAuction> {
+            override fun onResponse(call: Call<WinnerAuction>?, response: Response<WinnerAuction>?) {
+                if(response!!.code() == 200) {
+                    //Log.d("update","updateComplete")
+                }else{
+
+                }
+            }
+            override fun onFailure(call: Call<WinnerAuction>?, t: Throwable?) {
+
+            }
+
+        })
+
+    }
+
+
+
     override fun onStop() {
         super.onStop()
-        state = 0
+        stateTime = 0L
+        statrPriceColor = 0
         mWinner!!.removeEventListener(winner!!)
         mHistory!!.removeEventListener(history!!)
     }

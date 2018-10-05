@@ -48,9 +48,18 @@ interface ApiInterface {
     @GET("getCurrentTimeStamp")
     abstract fun queryCurrentTimeStamp(): Call<Long>
 
+    @POST("updateStatusLicenseCar")
+    abstract fun updateStatusLicenseCar(@Query("licenseCarId") licenseCarId : Long) : Call<LicenseCar>
+
+    @POST("insertSaveAuction")
+    abstract fun saveAuction(@Body dataAuction : GenericRequest<WinnerAuction>) : Call<WinnerAuction>
+
+    @GET("getCurrentTimeStamp")
+    abstract fun currentTimeStamp() : Call<Long>
+
     companion object Factory {
         val client = OkHttpClient()
-        val BASE_URL = "http://157.179.132.221:8080/"
+        val BASE_URL = "http://157.179.133.2:8080/"
         fun create(): ApiInterface {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)

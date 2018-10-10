@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.narupak.myapplication">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -27,7 +28,8 @@
         <activity android:name=".activity.AuctionActivity" />
         <activity android:name=".activity.DetailActivity" />
         <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.NotificationActivity"></activity>
+        <activity android:name=".activity.NotificationActivity" />
+        <activity android:name=".activity.HistoryAuctionActivity"></activity>
     </application>
 
 </manifest>

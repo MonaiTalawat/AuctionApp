@@ -16,6 +16,10 @@
             android:id="@+id/my_auction"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="ทะเบียนรถของฉัง" />
+        <item
+            android:id="@+id/historyAuction"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="ประวัติการประมูล" />
     </group>
 
     <item android:title="">

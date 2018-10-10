@@ -138,6 +138,14 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 intent.putExtra("user_id",userId)
                 startActivity(intent)
             }
+            R.id.historyAuction->{
+                var bundle = intent.extras
+                var userId = bundle.getInt("user_id")
+                val intent = Intent(baseContext,HistoryAuctionActivity::class.java)
+                intent.putExtra("name","historyAuction")
+                intent.putExtra("user_id",userId)
+                startActivity(intent)
+            }
             R.id.notification -> {
                 val intent = Intent(baseContext, NotificationActivity::class.java)
                 startActivity(intent)

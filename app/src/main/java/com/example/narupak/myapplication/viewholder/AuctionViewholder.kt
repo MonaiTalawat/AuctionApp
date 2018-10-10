@@ -26,8 +26,8 @@ class AuctionViewholder : RecyclerView.ViewHolder,View.OnClickListener {
         this.cardview_auction = itemView.findViewById(R.id.cardview_auction)
     }
     fun updateUI(auction : Auction){
-            var url = auction.getImgUrl()
-            val resource = imageview_auction!!.getResources().getIdentifier(url, null, imageview_auction!!.getContext().getPackageName())
-            imageview_auction!!.setImageResource(resource)
+        var url = auction.getImgUrl()
+        val resource = imageview_auction!!.getResources().getIdentifier(url, null, imageview_auction!!.getContext().getPackageName())
+        imageview_auction!!.setImageResource(resource)
     }
 }

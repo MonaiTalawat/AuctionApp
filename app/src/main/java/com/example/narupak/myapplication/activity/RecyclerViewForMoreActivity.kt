@@ -50,6 +50,7 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
         var number : String? = null
         var image : String? = null
         var seq : Long? = null
+        var status : String? = null
         val call = apiService.queryLicenseCarByStatus()
         Log.d("REQUEST", call.toString() + "")
         call.enqueue(object : retrofit2.Callback<List<LicenseCar>>{
@@ -62,7 +63,8 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
                         number = carlist.number
                         image = carlist.imageLicenseCar
                         seq = carlist.seq
-                        val licensecar_auction = Auction(seq,image,number,null)
+                        status = carlist.status
+                        val licensecar_auction = Auction(seq,image,number,null,status)
                         listcar!!.add(licensecar_auction)
                     }
                     var adapter_more : MoreAdapter? = null
@@ -91,6 +93,7 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
         var number : String? = null
         var image : String? = null
         var seq : Long? = null
+        var status : String? = null
         val call = apiService.queryRegisterLicenseCarByStatus()
         Log.d("REQUEST", call.toString() + "")
         call.enqueue(object : retrofit2.Callback<List<LicenseCar>>{
@@ -103,7 +106,8 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
                         number = carlist.number
                         image = carlist.imageLicenseCar
                         seq = carlist.seq
-                        val licensecar_auction = Auction(seq,image,number,null)
+                        status = carlist.status
+                        val licensecar_auction = Auction(seq,image,number,null,status)
                         listcar.add(licensecar_auction)
                     }
                     var adapter_more : MoreAdapter? = null
@@ -129,6 +133,7 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
         val apiService = ApiInterface.create()
         val user = User(user_id)
         val users = GenericRequest<User>()
+        var status : String? = null
         users.request = user
         val call = apiService.myAuction(users)
         Log.d("REQUEST", call.toString() + "")
@@ -144,7 +149,8 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
                         //Log.d("image",image)
                         val number = objects.number
                         val seq = objects.seq
-                        val licensecar_auction = Auction(seq,image,number,null)
+                        status = objects.status
+                        val licensecar_auction = Auction(seq,image,number,null,status)
                         listlicenseCar.add(licensecar_auction)
                     }
                     var adapter_more : MoreAdapter? = null

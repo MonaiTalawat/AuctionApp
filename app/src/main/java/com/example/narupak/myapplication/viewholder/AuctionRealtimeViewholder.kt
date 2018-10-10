@@ -29,7 +29,7 @@ class AuctionRealtimeViewholder : RecyclerView.ViewHolder{
 
         }
         fun updateUI(auctionRealtimeList : AuctionRealtimeDatabase){
-            bidder.text = auctionRealtimeList.bidder
+            bidder.text = auctionRealtimeList.bidder.toString()
             bidTime.text = auctionRealtimeList.bidtime.toString()
             Price.text = auctionRealtimeList.price.toString()
         }

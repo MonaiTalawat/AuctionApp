@@ -1,7 +1,9 @@
 package com.example.narupak.myapplication.service
 
 import com.example.narupak.myapplication.GenericRequest
+import com.example.narupak.myapplication.activity.HistoryAuctionActivity
 import com.example.narupak.myapplication.model.*
+import com.example.narupak.myapplication.viewholder.HistoryAuctionViewholder
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -57,9 +59,18 @@ interface ApiInterface {
     @GET("getCurrentTimeStamp")
     abstract fun currentTimeStamp() : Call<Long>
 
+    @POST("insertHistory")
+    abstract fun saveHistory(@Body history: GenericRequest<SaveHistory>) : Call<SaveHistory>
+
+    @POST("queryHistoryAuctionByUserId")
+    abstract fun queryHistoryByUserId(@Query("userId") userId : Long) : Call<List<Long>>
+
+    @POST("querySaveAuctionByLicenseCarId")
+    abstract fun querySaveAuctionByLicenseCarId(@Query("licenseCarId") licenseCarId: Long) : Call<List<SaveAuction>>
+
     companion object Factory {
         val client = OkHttpClient()
-        val BASE_URL = "http://157.179.133.2:8080/"
+        val BASE_URL = "http://157.179.133.174:8080/"
         fun create(): ApiInterface {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)

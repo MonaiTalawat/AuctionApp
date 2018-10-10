@@ -55,11 +55,11 @@ class LoginActivity : AppCompatActivity() {
                             intent.putExtra("user_id",list.id)
                             startActivity(intent)
                             finish()
-                            Toast.makeText(applicationContext,list.id.toString(),Toast.LENGTH_LONG).show()
+                            //Toast.makeText(applicationContext,list.id.toString(),Toast.LENGTH_LONG).show()
                         }
                     }
                 else{
-                    Toast.makeText(applicationContext,"login failed",Toast.LENGTH_LONG).show()
+                    //Toast.makeText(applicationContext,"login failed",Toast.LENGTH_LONG).show()
                 }
             }
                 override fun onFailure(call: Call<List<User>>?, t: Throwable?) {

@@ -1,18 +1,21 @@
 package com.example.narupak.myapplication.model
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Created by Narupak on 5/9/2561.
  */
 class AuctionRealtimeDatabase {
-    var bidder : String? = null
-    var bidtime : String? = null
+
+    var bidder : Long? = null
+    var bidtime : Long? = null
     var status : String? = null
-    var firstTime : String? = null
+    var firstTime : Long? = null
     var price : Long? = null
 
 
     constructor()
-    constructor(bidder: String?, bidtime: String?, status: String?, firstTime: String?, price: Long?) {
+    constructor(bidder: Long?, bidtime: Long?, status: String?, firstTime: Long?, price: Long?) {
         this.bidder = bidder
         this.bidtime = bidtime
         this.status = status

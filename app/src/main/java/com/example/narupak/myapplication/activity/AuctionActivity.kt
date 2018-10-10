@@ -6,18 +6,14 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.JsonReader
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.example.narupak.myapplication.GenericRequest
 import com.example.narupak.myapplication.R
-import com.example.narupak.myapplication.R.id.*
 import com.example.narupak.myapplication.adapter.AdapterAuctionRealtime
 import com.example.narupak.myapplication.model.*
 import com.example.narupak.myapplication.service.ApiInterface
@@ -37,10 +33,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.Transaction
 import com.google.firebase.database.MutableData
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
-import java.io.StringReader
-import java.util.Spliterators.iterator
 
 
 class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
@@ -55,7 +47,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     var time: Long = 30000
     var value: Long? = null
     var bidTime: Long? = null
-    var firstTime: Long? = null
+    //var firstTime: Long? = null
     var totalTime: Long? = 0
     var status: String? = null
     var leftTime: Long? = null
@@ -102,6 +94,10 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
     var addValueWinner: ValueEventListener? = null
     var id : Long? = 0
+
+    var firstTime : Long? = null
+
+    var historySave = ArrayList<AuctionRealtimeDatabase>()
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -114,9 +110,9 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         val bundle = intent.extras
         val userId = bundle.getInt("user_id")
         val licenseCarId = bundle.getLong("licenseCarId")
-        val status = bundle.getString("status")
+        val statusLicenseCar = bundle.getString("status")
         var typePage = bundle.getString("typePage")
-        if(status == "3"){
+        if(statusLicenseCar == "3"){
             btn_auction.isEnabled = false
             btn_auction.text = "สิ้้นสุดการประมูล"
             btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
@@ -150,7 +146,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                 if (bidTime == null) {
                     bidTime = 0
                 }
-                firstTime = dataSnapshot.child("member").child(userId.toString()).child("firstTime").value as Long?
+                //firstTime = dataSnapshot.child("member").child(userId.toString()).child("firstTime").value as Long?
                 if (firstTime == null) {
                     firstTime = 0
                 }
@@ -169,27 +165,38 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     //statusBidTime = 0
                     if (userId.toLong() == id) {
                         finalPrice.setTextColor(Color.GREEN)
+                        winText.text = "WIN"
+                        winText.setTextColor(Color.YELLOW)
                         //Log.d("colorLis", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
                     } else {
                         finalPrice.setTextColor(Color.RED)
+                        winText.text = "LOSE"
+                        winText.setTextColor(Color.RED)
                         //Log.d("colorLis", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
                     }
                 } else {
                 }
                 //tempPrice = value
-                btn_auction.isEnabled = false
-                btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
-                if(status == "Active") {
+
+                    //if(status == "Active") {
+                        btn_auction.isEnabled = false
+                        btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+
                     val handler = Handler()
                     handler.postDelayed(Runnable {
                         btn_auction.isEnabled = true
                         btn_auction.setBackgroundColor(Color.parseColor("#1E90FF"))
                     }, 2000)
-                }
+//                }else{
+//                        btn_auction.isEnabled = false
+//                        btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+//                    }
 
                 //////////////////////////// state firstTime ////////////////////////////////////////
                 if (stateTime == 0L) {
                     Log.d("first", "first")
+                    Log.d("firsttime", firstTime.toString())
+                    Log.d("bidTime", bidTime.toString())
                     //tempPrice = value!!.toLong()
                     //////////////////////////////////////// tempbidTime  == null firstcome /////////////////////////////////////
                     if (tempBidTime == null) {
@@ -206,7 +213,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                 textView_time.text = "Done"
                                 btn_auction.isEnabled = false
                                 btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
-                                callWebServiceForUpdateStatusLicenseCar(licenseCarId)
+                                //callWebServiceForUpdateStatusLicenseCar(licenseCarId)
                             }
                         }.start()
                     }
@@ -247,9 +254,23 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                     winner.bidTime = winnerbidTime
                                     winner.price = winnerPrice
                                     winner.licenseCarId = licenseCarId
+                                    Log.d("historySave",historySave.toString())
+                                    var saveHistoryList = ArrayList<SaveHistory>()
+                                    for (history in historySave) {
+                                        val saveHistory = SaveHistory()
+                                        saveHistory.id = history.bidder!!.toLong()
+                                        saveHistory.date = history.bidtime!!.toLong()
+                                        saveHistory.price = history.price
+                                        saveHistory.licenseCarId = licenseCarId
+                                        saveHistoryList.add(saveHistory)
+                                    }
+                                    //callWebServiceForSaveHistory(saveHistoryList)
                                     //callWebServiceForUpdateStatusLicenseCar(licenseCarId)
                                     if(userId.toLong() == id) {
                                         callWebServiceForSaveAuction(winner)
+                                        callWebServiceForSaveHistory(saveHistoryList)
+                                        mHistory!!.removeValue()
+                                        //callWebServiceForUpdateStatusLicenseCar(licenseCarId)
                                     }
                                 }
                             }.start()
@@ -276,7 +297,15 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
         history = mHistory!!.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val mapData = dataSnapshot.value as HashMap<String?,Mapdata?>
+                var mapNull = HashMap<String?,Mapdata?>()
+                var mapDataNullNext = HashMap<String?,Any?>()
+                var mapdataNull = Mapdata("1","2","20000")
+                mapDataNullNext.put("1",mapdataNull)
+                mapNull.put("1",mapdataNull)
+                var mapData = dataSnapshot.value as? HashMap<String?,Mapdata?>
+                if(mapData == null){
+                    mapData = mapNull
+                }
                 val mapDataSorted = TreeMap<String? ,Mapdata?>(Collections.reverseOrder())//TreeMap<String, Mapdata?>(mapData)
                 mapDataSorted.putAll(mapData)
                 val mapDataEntry = mapDataSorted.entries
@@ -284,10 +313,14 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                 val histories = ArrayList<AuctionRealtimeDatabase>()
                 while (mapDataItelator.hasNext()) {
                     val mapDataNext = mapDataItelator.next()
-                    val mapDataUser = mapDataNext.value as HashMap<String?, Any?>
+                    var mapDataUser = mapDataNext.value as? HashMap<String?, Any?>
+                    if(mapDataUser == null){
+                        mapDataUser = mapDataNullNext
+                    }
                     var gson = Gson()
                     var history = gson.fromJson(mapDataUser.toString(),AuctionRealtimeDatabase::class.java)
                     histories.add(history)
+                    historySave = histories
                 }
                 val RecyclerViewForAuction = findViewById<View>(R.id.recyclerView_auction) as RecyclerView
                 val linearLayoutManager = LinearLayoutManager(this@AuctionActivity)
@@ -302,7 +335,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             }
         })
         btn_auction.setOnClickListener(View.OnClickListener {
-            var auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toString(), "0", status, firstTime.toString(), spinnerPrice!!.toLong())
+            var auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toLong(), 0, status, firstTime, spinnerPrice!!.toLong())
             var mData = mDatabase!!.child("winner")
             //tranSacTionForAuction(mData,userId,licenseCarId,auctionRealtimeDatabase,spinnerPrice,tempVersion)
             val apiService = ApiInterface.create()
@@ -323,7 +356,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                         map.put("bidtime", timeStamp)
                         map.put("bidder", auctionRealtimeDatabase.bidder!!)
                         map.put("firstTime", auctionRealtimeDatabase.firstTime!!)
-                        map.put("price", 250000)
+                        map.put("price", auctionRealtimeDatabase.price)
                         mHistory!!.push().setValue(map)
 
                         ///////////////////////////////////map history to fitrbase////////////////////////////////////////
@@ -352,6 +385,8 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                     //statusBidTime = 0
                                     //Log.d("task","taskComplete")
                                     finalPrice.setTextColor(Color.GREEN)
+                                    winText.setTextColor(Color.YELLOW)
+                                    winText.text = "WIN"
                                     //Log.d("colortask", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
                                     statrPriceColor = 0
                                 }else{
@@ -367,6 +402,8 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                     //bidTime = dataSnapshot.child("bidTime").value as Long?
                                     //statusBidTime = 0
                                     finalPrice.setTextColor(Color.RED)
+                                    winText.setTextColor(Color.RED)
+                                    winText.text = "LOSE"
                                     //Log.d("colortask", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
                                     //Log.d("task","taskFailed")
                                     statrPriceColor = 0
@@ -531,6 +568,26 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         })
 
     }
+    fun callWebServiceForSaveHistory(historySave: ArrayList<SaveHistory>) {
+        val apiService = ApiInterface.create()
+        var genericRequestHistory = GenericRequest<SaveHistory>()
+        genericRequestHistory.requests = historySave
+        val call = apiService.saveHistory(genericRequestHistory)
+        call.enqueue(object : retrofit2.Callback<SaveHistory>{
+            override fun onResponse(call: Call<SaveHistory>?, response: Response<SaveHistory>?) {
+                if(response!!.code() == 200){
+                    Log.d("save","saveComplete")
+                }else{
+
+                }
+            }
+
+            override fun onFailure(call: Call<SaveHistory>?, t: Throwable?) {
+
+            }
+        })
+
+    }
 
     fun callWebServiceForFirstTimeStamp(userId : Long) : Long{
         val apiService = ApiInterface.create()
@@ -542,6 +599,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     timeStamp = response.body().toLong()
                     //Log.d("Time",timeStamp.toString())
                     mWinner!!.child("member").child(userId.toString()).child("firstTime").setValue(timeStamp)
+                    firstTime = timeStamp
                 }else{
 
                 }

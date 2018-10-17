@@ -29,7 +29,13 @@
         <activity android:name=".activity.DetailActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.NotificationActivity" />
-        <activity android:name=".activity.HistoryAuctionActivity"></activity>
+        <activity android:name=".activity.HistoryAuctionActivity" />
+        <activity android:name=".activity.DetailHistoryAuctionActivity" />
+        <activity
+            android:name=".activity.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.RecyclerViewForMoreMyAuction"></activity>
     </application>
 
 </manifest>

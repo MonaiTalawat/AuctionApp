@@ -60,18 +60,21 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             intent.putExtra("name","auction")
             intent.putExtra("user_id",userid)
             startActivity(intent)
+            finish()
         })
         more_register_auction.setOnClickListener(View.OnClickListener {
             val intent = Intent(baseContext, RecyclerViewForMoreActivity::class.java)
             intent.putExtra("name","register")
             intent.putExtra("user_id",userid)
             startActivity(intent)
+            finish()
         })
         myauction_more.setOnClickListener(View.OnClickListener {
-            val intent = Intent(baseContext, RecyclerViewForMoreActivity::class.java)
+            val intent = Intent(baseContext, RecyclerViewForMoreMyAuction::class.java)
             intent.putExtra("name","myauction")
             intent.putExtra("user_id",userid)
             startActivity(intent)
+            finish()
         })
     }
 
@@ -81,6 +84,8 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         } else {
             super.onBackPressed()
         }
+        finish()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -100,10 +105,12 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 if(userId == null) {
                     val intent = Intent(baseContext, LoginActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }else{
                     val intent = Intent(baseContext, SettingActivity::class.java)
                     intent.putExtra("user_id",userId)
                     startActivity(intent)
+                    finish()
                 }
                 return true
             }
@@ -121,6 +128,7 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 intent.putExtra("name","auction")
                 intent.putExtra("user_id",userId)
                 startActivity(intent)
+                finish()
             }
             R.id.register_auction -> {
                 var bundle = intent.extras
@@ -129,14 +137,16 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 intent.putExtra("name","register")
                 intent.putExtra("user_id",userId)
                 startActivity(intent)
+                finish()
             }
             R.id.my_auction -> {
                 var bundle = intent.extras
                 var userId = bundle.getInt("user_id")
-                val intent = Intent(baseContext, RecyclerViewForMoreActivity::class.java)
+                val intent = Intent(baseContext, RecyclerViewForMoreMyAuction::class.java)
                 intent.putExtra("name","myauction")
                 intent.putExtra("user_id",userId)
                 startActivity(intent)
+                finish()
             }
             R.id.historyAuction->{
                 var bundle = intent.extras
@@ -145,10 +155,15 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 intent.putExtra("name","historyAuction")
                 intent.putExtra("user_id",userId)
                 startActivity(intent)
+                finish()
             }
             R.id.notification -> {
+                var bundle = intent.extras
+                var userId = bundle.getInt("user_id")
                 val intent = Intent(baseContext, NotificationActivity::class.java)
+                intent.putExtra("user_id",userId)
                 startActivity(intent)
+                finish()
             }
             R.id.setting -> {
                 var bundle = intent.extras
@@ -157,6 +172,7 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 intent.putExtra("name","myauction")
                 intent.putExtra("user_id",userId)
                 startActivity(intent)
+                finish()
             }
         }
 
@@ -190,7 +206,7 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     }
                     val recyclerview_auction_main = findViewById<View?>(R.id.recyclerView_auction) as RecyclerView?
                     val linearLayoutManager = LinearLayoutManager(context)
-                    adapterAuction = AuctionAdapter(listcar,"auction",userId,status)
+                    adapterAuction = AuctionAdapter(listcar,"auction",userId,status!!.toLong())
                     recyclerview_auction_main!!.adapter = adapterAuction
                     linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
                     recyclerView_auction.layoutManager = linearLayoutManager
@@ -264,7 +280,7 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     }
                     val recyclerview_register = findViewById<View>(R.id.recyclerview_register) as RecyclerView?
                     val linearLayoutManager_register = LinearLayoutManager(context)
-                    adapterRegister = AuctionAdapter(listcar,"register",user_id,status)
+                    adapterRegister = AuctionAdapter(listcar,"register",user_id,status!!.toLong())
                     recyclerview_register!!.adapter = adapterRegister
                     linearLayoutManager_register.orientation = LinearLayoutManager.HORIZONTAL
                     recyclerview_register.layoutManager = linearLayoutManager_register
@@ -339,7 +355,7 @@ class MainMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     }
                     val myrecyclerview = findViewById<View>(R.id.myrecyclerview) as RecyclerView?
                     val mylinearLayoutmanager = LinearLayoutManager(context)
-                    adapter_myauction = AuctionAdapter(listlicenseCar,"myauction",user_id,status)
+                    adapter_myauction = AuctionAdapter(listlicenseCar,"myauction",user_id,status!!.toLong())
                     myrecyclerview!!.adapter = adapter_myauction
                     mylinearLayoutmanager.orientation = LinearLayoutManager.HORIZONTAL
 

@@ -1,13 +1,17 @@
 package com.example.narupak.myapplication.adapter
 
 import android.content.Intent
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.narupak.myapplication.activity.DetailActivity
 import com.example.narupak.myapplication.R
 import com.example.narupak.myapplication.activity.AuctionActivity
+import com.example.narupak.myapplication.activity.DetailHistoryAuctionActivity
+import com.example.narupak.myapplication.activity.HistoryAuctionActivity
 import com.example.narupak.myapplication.model.Auction
 import com.example.narupak.myapplication.viewholder.MoreViewholder
 
@@ -44,10 +48,52 @@ class MoreAdapter : RecyclerView.Adapter<MoreViewholder> {
                 intent.putExtra("user_id",userId)
                 holder.itemView.context.startActivity(intent)
             }else{
-                val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-                intent.putExtra("licenseCarId",more.seq)
-                intent.putExtra("user_id",userId)
-                holder.itemView.context.startActivity(intent)
+                if(more.status.equals("1")) {
+                    val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+                    intent.putExtra("licenseCarId", more.seq)
+                    intent.putExtra("user_id", userId)
+                    intent.putExtra("typePage", "myauction")
+                    intent.putExtra("imageLicenseCar",more.imageLicenseCar)
+                    intent.putExtra("status", more.status)
+                    holder.itemView.context.startActivity(intent)
+                }else if(more.status.equals("2")){
+                    // Initialize a new instance of
+                    val builder = AlertDialog.Builder(holder!!.itemView.context)
+                    // Set the alert dialog title
+                    builder.setTitle("Warnning Auction")
+                    // Display a message on alert dialog
+                    builder.setMessage("Are you want to Auction LicenseCar?")
+                    // Set a positive button and its click listener on alert dialog
+                    builder.setPositiveButton("YES") { dialog, which ->
+                        // Do something when user press the positive button
+                        Toast.makeText(holder!!.itemView.context, "Ok, we change the app background.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(holder.itemView.context, AuctionActivity::class.java)
+                        intent.putExtra("licenseCarId", more.seq)
+                        intent.putExtra("user_id", userId)
+                        intent.putExtra("typePage", "myauction")
+                        intent.putExtra("image",more.imageLicenseCar)
+                        intent.putExtra("status", more.status)
+                        holder.itemView.context.startActivity(intent)
+                    }
+                    // Display a negative button on alert dialog
+                    builder.setNegativeButton("No") { dialog, which ->
+                        Toast.makeText(holder.itemView.context, "You are not agree.", Toast.LENGTH_SHORT).show()
+                    }
+
+                    // Finally, make the alert dialog using builder
+                    val dialog: AlertDialog = builder.create()
+
+                    // Display the alert dialog on app interface
+                    dialog.show()
+                }else{
+                    val intent = Intent(holder.itemView.context, DetailHistoryAuctionActivity::class.java)
+                    intent.putExtra("licenseCarId", more.seq)
+                    intent.putExtra("user_id", userId)
+                    intent.putExtra("typePage", "myauction")
+                    intent.putExtra("imageLicenseCar",more.imageLicenseCar)
+                    intent.putExtra("status", more.status)
+                    holder.itemView.context.startActivity(intent)
+                }
             }
         })
     }

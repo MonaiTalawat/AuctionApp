@@ -55,6 +55,12 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        var intent = Intent(baseContext,LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 //        call.enqueue(object : retrofit2.Callback<User>{
 //            override fun onResponse(call: Call<User>?, response: Response<User>?) {
 //                if(response != null){

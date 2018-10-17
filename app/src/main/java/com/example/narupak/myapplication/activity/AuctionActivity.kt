@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.narupak.myapplication.GenericRequest
@@ -49,7 +51,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     var bidTime: Long? = null
     //var firstTime: Long? = null
     var totalTime: Long? = 0
-    var status: String? = null
+    var statusUser: String? = null
     var leftTime: Long? = null
     var tempValue: String? = null
     var tempBidTime: Long? = null
@@ -58,6 +60,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     var tempPrice: Long? = 0L
     var tempVersion : Long? = null
     var task  =null
+    var typeColor : String? = "#BEBEBE"
     var version : Long? = null
     var mapMember : Map<String,Member>? = HashMap<String,Member>()
     var timerClick = object : CountDownTimer(30000, 1000) {
@@ -75,6 +78,19 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     }
 
     var timerFirst = object : CountDownTimer(totalTime!!, 1000) {
+
+        override fun onTick(millisUntilFinished: Long) {
+            textView_time.text = (millisUntilFinished / 1000).toString()
+        }
+
+        override fun onFinish() {
+            textView_time.text = "Done"
+            btn_auction.isEnabled = false
+            btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+        }
+    }
+
+    var timerFirstDeActive = object : CountDownTimer(totalTime!!, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
             textView_time.text = (millisUntilFinished / 1000).toString()
@@ -113,8 +129,9 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         val statusLicenseCar = bundle.getString("status")
         var typePage = bundle.getString("typePage")
         if(statusLicenseCar == "3"){
-            btn_auction.isEnabled = false
-            btn_auction.text = "สิ้้นสุดการประมูล"
+            spinnerAuction.visibility = GONE
+            btn_auction.visibility = GONE
+            textAuction.text = "สิ้้นสุดการประมูล"
             btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
         }
         mDatabase = mDatabase!!.child(licenseCarId.toString())
@@ -133,6 +150,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
 
+                Log.d("status",statusUser.toString())
                 Log.d("datasnapshot1", dataSnapshot.toString())
                 value = dataSnapshot.child("price").value.toString().toLong()
                 if (value == null) {
@@ -163,16 +181,42 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     finalPrice.text = value.toString()
                     //bidTime = dataSnapshot.child("bidTime").value as Long?
                     //statusBidTime = 0
-                    if (userId.toLong() == id) {
-                        finalPrice.setTextColor(Color.GREEN)
-                        winText.text = "WIN"
-                        winText.setTextColor(Color.YELLOW)
-                        //Log.d("colorLis", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
-                    } else {
-                        finalPrice.setTextColor(Color.RED)
-                        winText.text = "LOSE"
-                        winText.setTextColor(Color.RED)
-                        //Log.d("colorLis", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                    if(statusUser == "Active") {
+                        if (userId.toLong() == id) {
+                            finalPrice.setTextColor(Color.GREEN)
+                            winText.text = "WIN"
+                            winText.setTextColor(Color.YELLOW)
+                            //Log.d("colorLis", "GREEN And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                        } else {
+                            finalPrice.setTextColor(Color.RED)
+                            winText.text = "LOSE"
+                            winText.setTextColor(Color.RED)
+                            //Log.d("colorLis", "RED And winner is : " + id.toString() + " And Device is : " + userId.toString())
+                        }
+                    }else{
+                        if(typeColor == "#BEBEBE"){
+                            finalPrice.setTextColor(Color.parseColor(typeColor))
+                            typeColor = "#1E90FF"
+                        }else{
+                            finalPrice.setTextColor(Color.parseColor(typeColor))
+                            typeColor = "#BEBEBE"
+                        }
+
+//                        leftTime = firstTime!!.minus(bidTime!!)
+//                        leftTime = 30000.minus(leftTime!!)
+//                        timerFirstDeActive = object : CountDownTimer(leftTime!!, 1000) {
+//                            override fun onTick(millisUntilFinished: Long) {
+//                                textView_time.text = (millisUntilFinished / 1000).toString()
+//                            }
+//
+//                            override fun onFinish() {
+//                                textView_time.text = "Done"
+//                                btn_auction.isEnabled = false
+//                                btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+//                                textAuction.text = "สิ้นสุดการประมูลแล้วนะครับ"
+//                                //callWebServiceForUpdateStatusLicenseCar(licenseCarId)
+//                            }
+//                        }.start()
                     }
                 } else {
                 }
@@ -201,6 +245,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     //////////////////////////////////////// tempbidTime  == null firstcome /////////////////////////////////////
                     if (tempBidTime == null) {
                         //Log.d("bidTime1",bidTime.toString())
+                        timerFirstDeActive.cancel()
                         leftTime = firstTime!!.minus(bidTime!!)
                         leftTime = 30000.minus(leftTime!!)
                         //Toast.makeText(applicationContext,"bidTime = "+ tempBidTime.toString(),Toast.LENGTH_LONG).show()
@@ -213,6 +258,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                 textView_time.text = "Done"
                                 btn_auction.isEnabled = false
                                 btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
+                                textAuction.text = "สิ้นสุดการประมูล"
                                 //callWebServiceForUpdateStatusLicenseCar(licenseCarId)
                             }
                         }.start()
@@ -245,7 +291,10 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                     textView_time.text = "Done"
                                     btn_auction.isEnabled = false
                                     btn_auction.setBackgroundColor(Color.parseColor("#BEBEBE"))
-                                    btn_auction.text = "เสร็จสิ้นการประมูล"
+                                    btn_auction.visibility = GONE
+                                    spinnerAuction.visibility = GONE
+                                    textAuction.text = "สิ้นสุดการประมูล"
+                                    textAuction.visibility = VISIBLE
                                     var winner = WinnerAuction()
                                     var winnerUserId = dataSnapshot.child("bidder").value as Long?
                                     var winnerbidTime = dataSnapshot.child("bidTime").value as Long?
@@ -335,7 +384,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             }
         })
         btn_auction.setOnClickListener(View.OnClickListener {
-            var auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toLong(), 0, status, firstTime, spinnerPrice!!.toLong())
+            var auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toLong(), 0, statusUser, firstTime, spinnerPrice!!.toLong())
             var mData = mDatabase!!.child("winner")
             //tranSacTionForAuction(mData,userId,licenseCarId,auctionRealtimeDatabase,spinnerPrice,tempVersion)
             val apiService = ApiInterface.create()
@@ -445,15 +494,16 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
             override fun onResponse(call: Call<List<RegisterAuctionLicenseCar>>?, response: Response<List<RegisterAuctionLicenseCar>>?) {
                 if (response!!.code() == 200) {
-                    status = "Active"
+                    statusUser = "Active"
                     btn_auction.isEnabled = true
                     spinnerAuction.isEnabled = true
                     //mDatabase!!.child(licenseCarId.toString()).child("member").child(userId.toString()).child("firstTime").setValue(ServerValue.TIMESTAMP)
 
                 } else {
-                    status = "deActive"
-                    btn_auction.isEnabled = false
-                    spinnerAuction.isEnabled = false
+                    statusUser = "deActive"
+                    btn_auction.visibility = GONE
+                    spinnerAuction.visibility = GONE
+                    textAuction.visibility = VISIBLE
                 }
                 //val auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toString(), "0", status, "0", "0")
             }

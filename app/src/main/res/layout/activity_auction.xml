@@ -14,7 +14,7 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout4"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="161dp"
             android:layout_margin="10dp"
             android:layout_marginTop="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -36,6 +36,66 @@
                 app:layout_constraintStart_toStartOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constrainbutton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+            <TextView
+                android:id="@+id/textAuction"
+                android:layout_width="289dp"
+                android:layout_height="56dp"
+                android:text="กำลังประมูลอยู่นะครับ"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="30sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/btn_auction"
+                android:layout_width="145dp"
+                android:layout_height="51dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="48dp"
+                android:background="@android:color/holo_orange_dark"
+                android:text="ประมูล"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerAuction" />
+
+            <Spinner
+                android:id="@+id/spinnerAuction"
+                android:layout_width="276dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+        </android.support.constraint.ConstraintLayout>
+
         <ImageView
             android:id="@+id/image_auction"
             android:layout_width="340dp"
@@ -52,24 +112,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/tabian1" />
 
-        <Button
-            android:id="@+id/btn_auction"
-            android:layout_width="0dp"
-            android:layout_height="51dp"
-            android:layout_margin="10dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="48dp"
-            android:background="@android:color/holo_orange_dark"
-            android:text="ประมูล"
-            android:textColor="@color/cardview_light_background"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerAuction" />
-
         <TextView
             android:id="@+id/finalPrice"
             android:layout_width="107dp"
@@ -81,16 +123,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_auction" />
-
-        <Spinner
-            android:id="@+id/spinnerAuction"
-            android:layout_width="276dp"
-            android:layout_height="47dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
         <TextView
             android:id="@+id/textView_time"

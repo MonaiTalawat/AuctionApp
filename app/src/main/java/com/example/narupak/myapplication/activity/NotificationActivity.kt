@@ -62,4 +62,16 @@ class NotificationActivity : AppCompatActivity() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(1000, notification)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        var bundle = intent.extras
+        var userId = bundle.getInt("user_id")
+        var intent = Intent(baseContext,MainMenuActivity::class.java)
+        intent.putExtra("user_id",userId)
+        startActivity(intent)
+        finish()
+    }
+
+
 }

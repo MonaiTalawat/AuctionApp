@@ -2,6 +2,7 @@ package com.example.narupak.myapplication.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -18,6 +19,7 @@ import com.example.narupak.myapplication.model.RegisterAuctionLicenseCar
 import com.example.narupak.myapplication.model.User
 import com.example.narupak.myapplication.service.ApiInterface
 import kotlinx.android.synthetic.main.activity_recycler_view_for_more.*
+import kotlinx.android.synthetic.main.activity_recycler_view_for_my_auction.*
 import retrofit2.Call
 import retrofit2.Response
 
@@ -34,12 +36,10 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
         var userId = bundle.getInt("user_id")
         if(bundle.getString("name").equals("auction")){
             callWebserviceForMoreAuction(this,userId)
-            layout_for_more.background = getDrawable(R.drawable.background_for_moreauction)
+            nestedscroll.setBackgroundColor(Color.parseColor("#6a00e6ff"))
         }else if(bundle.getString("name").equals("register")){
             callWebserviceForMoreRegisterAuction(this,userId)
-            layout_for_more.background = getDrawable(R.drawable.background_for_registerauction)
-        }else{
-            callWebserviceForMyAuctionRecyclerView(this,userId)
+            nestedscroll.setBackgroundColor(Color.parseColor("#71f2ff00"))
         }
     }
 
@@ -124,49 +124,6 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<LicenseCar>>?, t: Throwable?) {
-                Log.d("failed",t.toString())
-            }
-        })
-    }
-
-    fun callWebserviceForMyAuctionRecyclerView(context : Context,user_id : Int){
-        val apiService = ApiInterface.create()
-        val user = User(user_id)
-        val users = GenericRequest<User>()
-        var status : String? = null
-        users.request = user
-        val call = apiService.myAuction(users)
-        Log.d("REQUEST", call.toString() + "")
-        call.enqueue(object : retrofit2.Callback<List<RegisterAuctionLicenseCar>>{
-            override fun onResponse(call: Call<List<RegisterAuctionLicenseCar>>?, response: Response<List<RegisterAuctionLicenseCar>>?){
-                val listlicenseCar = ArrayList<Auction>()
-                if(response?.code() == 200){
-                    val recyclerView_more = findViewById<View>(R.id.recyclerview_more) as RecyclerView
-                    for (list in response.body().iterator()){
-                        //Log.d("JSON",)
-                        var objects = list.licenseCar
-                        val image = objects!!.imageLicenseCar
-                        //Log.d("image",image)
-                        val number = objects.number
-                        val seq = objects.seq
-                        status = objects.status
-                        val licensecar_auction = Auction(seq,image,number,null,status)
-                        listlicenseCar.add(licensecar_auction)
-                    }
-                    var adapter_more : MoreAdapter? = null
-                    header_more.text = "ทะเบียนรถของฉันเพิ่มเติม"
-                    type_page = "myauction"
-                    adapter_more = MoreAdapter(listlicenseCar,type_page.toString(),user_id)
-                    recyclerView_more.adapter = adapter_more
-                    val linearLayoutManager = LinearLayoutManager(baseContext)
-                    linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                    recyclerView_more.layoutManager = linearLayoutManager
-                }else{
-                    Toast.makeText(applicationContext,"failed", Toast.LENGTH_LONG).show()
-                }
-            }
-
-            override fun onFailure(call: Call<List<RegisterAuctionLicenseCar>>?, t: Throwable?) {
                 Log.d("failed",t.toString())
             }
         })

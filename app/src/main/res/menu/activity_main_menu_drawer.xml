@@ -6,33 +6,39 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/auction"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="ทะเบียนรถที่กำลังประมูล" />
+            android:icon="@drawable/icon_auction"
+            android:title="ป้ายทะเบียนที่กำลังประมูล" />
         <item
             android:id="@+id/register_auction"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="ทะเบียนรถที่เปิดให้ลงทะเบียน" />
-        <item
-            android:id="@+id/my_auction"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="ทะเบียนรถของฉัง" />
-        <item
-            android:id="@+id/historyAuction"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="ประวัติการประมูล" />
+            android:icon="@drawable/icon_registerauction"
+            android:title="ป้ายทะเบียนที่เปิดให้ลงทะเบียน" />
     </group>
-
-    <item android:title="">
+    <item android:title="ป้ายทะเบียนของฉัน">
+        <menu>
+            <item
+                android:id="@+id/myRegisterAuction"
+                android:icon="@drawable/icon_registerauction"
+                android:title="ป้ายทะเบียนที่ลงทะเบียนแล้ว" />
+            <item
+                android:id="@+id/myAuction"
+                android:icon="@drawable/icon_auction"
+                android:title="ป้ายทะเบียนที่กำลังประมูล" />
+            <item
+                android:id="@+id/myhistoryAuction"
+                android:icon="@drawable/icon_history"
+                android:title="ประวัติการประมูล" />
+        </menu>
+    </item>
+    <item android:title="อื่นๆ">
         <menu>
             <item
                 android:id="@+id/notification"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/icon_notification"
                 android:title="แจ้งเตือน" />
             <item
                 android:id="@+id/setting"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/icon_setting"
                 android:title="ตั้งค่า" />
         </menu>
     </item>
-
 </menu>

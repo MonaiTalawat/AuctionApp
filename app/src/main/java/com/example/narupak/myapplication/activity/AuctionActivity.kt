@@ -53,16 +53,11 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
     var totalTime: Long? = 0
     var statusUser: String? = null
     var leftTime: Long? = null
-    var tempValue: String? = null
     var tempBidTime: Long? = null
     var statrPriceColor: Int? = 0
     var stateTime : Long? = 0L
-    var tempPrice: Long? = 0L
-    var tempVersion : Long? = null
-    var task  =null
     var typeColor : String? = "#BEBEBE"
     var version : Long? = null
-    var mapMember : Map<String,Member>? = HashMap<String,Member>()
     var timerClick = object : CountDownTimer(30000, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
@@ -103,12 +98,10 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         }
     }
 
-    var statusBidTime : Long? = 0L
     var winner: ValueEventListener? = null
 
     var history: ValueEventListener? = null
 
-    var addValueWinner: ValueEventListener? = null
     var id : Long? = 0
 
     var firstTime : Long? = null
@@ -120,9 +113,9 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         setContentView(R.layout.activity_auction)
         spinnerAuction.setOnItemSelectedListener(this)
         mDatabase = FirebaseDatabase.getInstance().reference
-        val aa = ArrayAdapter(this, android.R.layout.simple_spinner_item, price)
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerAuction.setAdapter(aa)
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, price)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerAuction.setAdapter(spinnerAdapter)
         val bundle = intent.extras
         val userId = bundle.getInt("user_id")
         val licenseCarId = bundle.getLong("licenseCarId")
@@ -176,7 +169,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     price[3] = parseInt(value.toString()) + 2000
                     price[4] = parseInt(value.toString()) + 2500
                     spinnerAuction.setSelection(0, true)
-                    aa.notifyDataSetChanged()
+                    spinnerAdapter.notifyDataSetChanged()
                     spinnerPrice = price[0].toString()
                     finalPrice.text = value.toString()
                     //bidTime = dataSnapshot.child("bidTime").value as Long?
@@ -295,16 +288,16 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                     spinnerAuction.visibility = GONE
                                     textAuction.text = "สิ้นสุดการประมูล"
                                     textAuction.visibility = VISIBLE
-                                    var winner = WinnerAuction()
-                                    var winnerUserId = dataSnapshot.child("bidder").value as Long?
-                                    var winnerbidTime = dataSnapshot.child("bidTime").value as Long?
-                                    var winnerPrice = dataSnapshot.child("price").value as Long?
+                                    val winner = WinnerAuction()
+                                    val winnerUserId = dataSnapshot.child("bidder").value as Long?
+                                    val winnerbidTime = dataSnapshot.child("bidTime").value as Long?
+                                    val winnerPrice = dataSnapshot.child("price").value as Long?
                                     winner.bidder = winnerUserId
                                     winner.bidTime = winnerbidTime
                                     winner.price = winnerPrice
                                     winner.licenseCarId = licenseCarId
                                     Log.d("historySave",historySave.toString())
-                                    var saveHistoryList = ArrayList<SaveHistory>()
+                                    val saveHistoryList = ArrayList<SaveHistory>()
                                     for (history in historySave) {
                                         val saveHistory = SaveHistory()
                                         saveHistory.id = history.bidder!!.toLong()
@@ -346,9 +339,9 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
         history = mHistory!!.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var mapNull = HashMap<String?,Mapdata?>()
-                var mapDataNullNext = HashMap<String?,Any?>()
-                var mapdataNull = Mapdata("1","2","20000")
+                val mapNull = HashMap<String?,Mapdata?>()
+                val mapDataNullNext = HashMap<String?,Any?>()
+                val mapdataNull = Mapdata("1","2","20000")
                 mapDataNullNext.put("1",mapdataNull)
                 mapNull.put("1",mapdataNull)
                 var mapData = dataSnapshot.value as? HashMap<String?,Mapdata?>
@@ -366,15 +359,15 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                     if(mapDataUser == null){
                         mapDataUser = mapDataNullNext
                     }
-                    var gson = Gson()
-                    var history = gson.fromJson(mapDataUser.toString(),AuctionRealtimeDatabase::class.java)
+                    val gson = Gson()
+                    val history = gson.fromJson(mapDataUser.toString(),AuctionRealtimeDatabase::class.java)
                     histories.add(history)
                     historySave = histories
                 }
                 val RecyclerViewForAuction = findViewById<View>(R.id.recyclerView_auction) as RecyclerView
                 val linearLayoutManager = LinearLayoutManager(this@AuctionActivity)
                 val AdapterAuctionRealtime = AdapterAuctionRealtime(histories)
-                RecyclerViewForAuction!!.adapter = AdapterAuctionRealtime
+                RecyclerViewForAuction.adapter = AdapterAuctionRealtime
                 linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                 RecyclerViewForAuction.layoutManager = linearLayoutManager
             }
@@ -384,7 +377,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             }
         })
         btn_auction.setOnClickListener(View.OnClickListener {
-            var auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toLong(), 0, statusUser, firstTime, spinnerPrice!!.toLong())
+            val auctionRealtimeDatabase = AuctionRealtimeDatabase(userId.toLong(), 0, statusUser, firstTime, spinnerPrice!!.toLong())
             var mData = mDatabase!!.child("winner")
             //tranSacTionForAuction(mData,userId,licenseCarId,auctionRealtimeDatabase,spinnerPrice,tempVersion)
             val apiService = ApiInterface.create()
@@ -392,7 +385,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
             call.enqueue(object : retrofit2.Callback<Long> {
                 override fun onResponse(call: Call<Long>?, response: Response<Long>?) {
                     if(response!!.code() == 200) {
-                        var timeStamp = response.body().toLong()
+                        val timeStamp = response.body().toLong()
 
                         /////////////////////////////////// insert data member to firebase////////////////////////////////
                         mPerson!!.child("member").child(userId.toString()).setValue(auctionRealtimeDatabase)
@@ -401,7 +394,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                         /////////////////////////////////// insert data member to firebase////////////////////////////////
                         ///////////////////////////////////map history to fitrbase/////////////////////////////////////////
 
-                        var map = HashMap<String?, Any?>()
+                        val map = HashMap<String?, Any?>()
                         map.put("bidtime", timeStamp)
                         map.put("bidder", auctionRealtimeDatabase.bidder!!)
                         map.put("firstTime", auctionRealtimeDatabase.firstTime!!)
@@ -411,7 +404,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                         ///////////////////////////////////map history to fitrbase////////////////////////////////////////
 
                         ///////////////////////////////////map Winner to fitrbase////////////////////////////////////////
-                        var mapWinner =  HashMap<String, Any?>()
+                        val mapWinner =  HashMap<String, Any?>()
                         mapWinner.put("bidTime",timeStamp)
                         mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
                         mapWinner.put("price", auctionRealtimeDatabase.price!!)
@@ -427,7 +420,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                     price[3] = parseInt(value.toString()) + 2000
                                     price[4] = parseInt(value.toString()) + 2500
                                     spinnerAuction.setSelection(0, true)
-                                    aa.notifyDataSetChanged()
+                                    spinnerAdapter.notifyDataSetChanged()
                                     spinnerPrice = price[0].toString()
                                     finalPrice.text = value.toString()
                                     //bidTime = dataSnapshot.child("bidTime").value as Long?
@@ -445,7 +438,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                                     price[3] = parseInt(value.toString()) + 2000
                                     price[4] = parseInt(value.toString()) + 2500
                                     spinnerAuction.setSelection(0, true)
-                                    aa.notifyDataSetChanged()
+                                    spinnerAdapter.notifyDataSetChanged()
                                     spinnerPrice = price[0].toString()
                                     finalPrice.text = value.toString()
                                     //bidTime = dataSnapshot.child("bidTime").value as Long?
@@ -482,9 +475,9 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
         val apiService = ApiInterface.create()
         val registerAuctionList = GenericRequest<RegisterAuctionLicenseCar>()
         val registerAuction = RegisterAuctionLicenseCar()
-        var uservm = User()
+        val uservm = User()
         uservm.id = userId
-        var licenseCar = LicenseCar()
+        val licenseCar = LicenseCar()
         licenseCar.seq = licenseCarId
         registerAuction.user = uservm
         registerAuction.licenseCar = licenseCar
@@ -544,10 +537,10 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
                 call.enqueue(object : retrofit2.Callback<Long> {
                     override fun onResponse(call: Call<Long>?, response: Response<Long>?) {
                         if(response!!.code() == 200) {
-                            var timeStamp = response.body().toLong()
+                            val timeStamp = response.body().toLong()
 
                             ///////////////////////////////////map Winner to fitrbase////////////////////////////////////////
-                            var mapWinner =  HashMap<String, Any?>()
+                            val mapWinner =  HashMap<String, Any?>()
                             mapWinner.put("bidTime",timeStamp)
                             mapWinner.put("bidder", auctionRealtimeDatabase.bidder!!.toLong())
                             mapWinner.put("price", auctionRealtimeDatabase.price!!)
@@ -663,7 +656,7 @@ class AuctionActivity : AppCompatActivity(),AdapterView.OnItemSelectedListener {
 
     fun callWebServiceForSaveAuction(winnerAuction : WinnerAuction){
         val apiService = ApiInterface.create()
-        var genericRequest = GenericRequest<WinnerAuction>()
+        val genericRequest = GenericRequest<WinnerAuction>()
         genericRequest.request = winnerAuction
         val call = apiService.saveAuction(genericRequest)
         call.enqueue(object : retrofit2.Callback<WinnerAuction> {

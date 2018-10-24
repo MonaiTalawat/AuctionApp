@@ -7,11 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.narupak.myapplication.activity.DetailActivity
 import com.example.narupak.myapplication.R
-import com.example.narupak.myapplication.activity.AuctionActivity
-import com.example.narupak.myapplication.activity.DetailHistoryAuctionActivity
-import com.example.narupak.myapplication.activity.HistoryAuctionActivity
+import com.example.narupak.myapplication.activity.*
 import com.example.narupak.myapplication.model.Auction
 import com.example.narupak.myapplication.viewholder.MoreViewholder
 
@@ -42,11 +39,13 @@ class MoreAdapter : RecyclerView.Adapter<MoreViewholder> {
                 intent.putExtra("user_id",userId)
                 intent.putExtra("image",more.imageLicenseCar)
                 holder.itemView.context.startActivity(intent)
+                (holder.itemView.context as RecyclerViewForMoreActivity).finish()
             }else if(typePage.equals("register")){
                 val intent = Intent(holder.itemView.context, DetailActivity::class.java)
                 intent.putExtra("licenseCarId",more.seq)
                 intent.putExtra("user_id",userId)
                 holder.itemView.context.startActivity(intent)
+                (holder.itemView.context as RecyclerViewForMoreActivity).finish()
             }else{
                 if(more.status.equals("1")) {
                     val intent = Intent(holder.itemView.context, DetailActivity::class.java)
@@ -56,6 +55,7 @@ class MoreAdapter : RecyclerView.Adapter<MoreViewholder> {
                     intent.putExtra("imageLicenseCar",more.imageLicenseCar)
                     intent.putExtra("status", more.status)
                     holder.itemView.context.startActivity(intent)
+                    (holder.itemView.context as ActionBarTabActivity).finish()
                 }else if(more.status.equals("2")){
                     // Initialize a new instance of
                     val builder = AlertDialog.Builder(holder!!.itemView.context)
@@ -74,6 +74,7 @@ class MoreAdapter : RecyclerView.Adapter<MoreViewholder> {
                         intent.putExtra("image",more.imageLicenseCar)
                         intent.putExtra("status", more.status)
                         holder.itemView.context.startActivity(intent)
+                        (holder.itemView.context as ActionBarTabActivity).finish()
                     }
                     // Display a negative button on alert dialog
                     builder.setNegativeButton("No") { dialog, which ->
@@ -93,6 +94,7 @@ class MoreAdapter : RecyclerView.Adapter<MoreViewholder> {
                     intent.putExtra("imageLicenseCar",more.imageLicenseCar)
                     intent.putExtra("status", more.status)
                     holder.itemView.context.startActivity(intent)
+                    (holder.itemView.context as ActionBarTabActivity).finish()
                 }
             }
         })

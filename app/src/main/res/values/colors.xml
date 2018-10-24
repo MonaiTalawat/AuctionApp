@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#ff4081</color>
-    <color name="danger">#FF0000</color>
+    <color name="colorPrimary">#114469</color>
+    <color name="colorPrimaryDark">#114469</color>
+    <color name="colorAccent">#8b939b9a</color>
+    <color name="danger">#8294ff99</color>
     <color name="colorAuction">#a0ff5e00</color>
     <color name="colorAuctionBlue">#b2540004</color>
 </resources>

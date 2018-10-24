@@ -53,6 +53,9 @@ class LoginActivity : AppCompatActivity() {
                         for(list in response.body().listIterator()){
                             val intent = Intent(baseContext, MainMenuActivity::class.java)
                             intent.putExtra("user_id",list.id)
+                            intent.putExtra("firstname",list.firstname)
+                            intent.putExtra("lastname",list.lastname)
+                            intent.putExtra("mail",list.mail)
                             startActivity(intent)
                             finish()
                             //Toast.makeText(applicationContext,list.id.toString(),Toast.LENGTH_LONG).show()

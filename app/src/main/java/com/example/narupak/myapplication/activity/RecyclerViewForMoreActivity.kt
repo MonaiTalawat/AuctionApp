@@ -36,10 +36,12 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
         var userId = bundle.getInt("user_id")
         if(bundle.getString("name").equals("auction")){
             callWebserviceForMoreAuction(this,userId)
-            nestedscroll.setBackgroundColor(Color.parseColor("#6a00e6ff"))
+            nestedscroll.setBackgroundResource(R.drawable.gradient1)
+            constraintLayoutMoreHeader.background = getDrawable(R.drawable.gradient1)
         }else if(bundle.getString("name").equals("register")){
             callWebserviceForMoreRegisterAuction(this,userId)
-            nestedscroll.setBackgroundColor(Color.parseColor("#71f2ff00"))
+            nestedscroll.setBackgroundResource(R.drawable.gradient3)
+            constraintLayoutMoreHeader.background = getDrawable(R.drawable.gradient3)
         }
     }
 
@@ -68,7 +70,7 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
                         listcar!!.add(licensecar_auction)
                     }
                     var adapter_more : MoreAdapter? = null
-                    header_more.text = "ทะเบียนรถที่กำลังประมูลเพิ่มเติม"
+                    header_more.text = "ทะเบียนรถที่กำลังประมูล"
                     type_page = "auction"
                     adapter_more = MoreAdapter(listcar,type_page.toString(),userId)
                     recyclerView_more.adapter = adapter_more
@@ -111,7 +113,7 @@ class RecyclerViewForMoreActivity : AppCompatActivity() {
                         listcar.add(licensecar_auction)
                     }
                     var adapter_more : MoreAdapter? = null
-                    header_more.text = "ทะเบียนรถที่เปิดให้ลงทะเบียนเพิ่มเติม"
+                    header_more.text = "ทะเบียนรถที่เปิดให้ลงทะเบียน"
                     type_page = "register"
                     adapter_more = MoreAdapter(listcar,type_page.toString(),userId)
                     recyclerView_more.adapter = adapter_more

@@ -31,7 +31,14 @@ class MoreViewholder : RecyclerView.ViewHolder{
             constraint_more.setBackgroundResource(R.drawable.gradient2)
         }
         var url = auction.getImgUrl()
-        val resource = image_more!!.getResources().getIdentifier(url, null, image_more!!.getContext().getPackageName())
-        image_more!!.setImageResource(resource)
+        if(!url.equals(null)) {
+            url = auction.getImgUrl()
+            val resource = image_more!!.getResources().getIdentifier(url, null, image_more!!.getContext().getPackageName())
+            image_more!!.setImageResource(resource)
+        }else{
+            url = "drawable/car_default"
+            val resource = image_more!!.getResources().getIdentifier(url, null, image_more!!.getContext().getPackageName())
+            image_more!!.setImageResource(resource)
+        }
     }
 }

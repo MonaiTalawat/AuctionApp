@@ -27,7 +27,7 @@ class AdapterHistoryAuction : RecyclerView.Adapter<HistoryAuctionViewholder>{
 
     override fun onBindViewHolder(holder: HistoryAuctionViewholder?, position: Int) {
         var saveAuctionlist = historyAuction!!.get(position)
-        holder!!.updateUI(saveAuctionlist)
+        holder!!.updateUI(saveAuctionlist,holder)
         holder.cardView_history.setOnClickListener(View.OnClickListener {
             var intent = Intent(holder.itemView.context,DetailHistoryAuctionActivity::class.java)
             intent.putExtra("licenseCarId",saveAuctionlist.seq)

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
+    android:background="@drawable/gradiant4"
     tools:context="com.example.narupak.myapplication.activity.DetailHistoryAuctionActivity"
     tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="8dp">
@@ -19,15 +19,19 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="134dp"
-            android:background="@drawable/background_for_moreauction2">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_margin="10dp"
+            android:background="@drawable/gradient2"
+            android:elevation="10dp">
 
             <ImageView
                 android:id="@+id/imageViewDetailHistory"
-                android:layout_width="293dp"
+                android:layout_width="300dp"
                 android:layout_height="107dp"
                 android:layout_margin="10dp"
+                android:elevation="10dp"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

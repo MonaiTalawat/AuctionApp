@@ -11,6 +11,7 @@ import com.example.narupak.myapplication.adapter.AdapterDetailHistoryAuction
 import com.example.narupak.myapplication.model.DetailHistoryAuction
 import com.example.narupak.myapplication.model.SaveAuctionHistory
 import com.example.narupak.myapplication.service.ApiInterface
+import kotlinx.android.synthetic.main.activity_detail_history_auction.*
 import retrofit2.Call
 import retrofit2.Response
 
@@ -24,6 +25,9 @@ class DetailHistoryAuctionActivity : AppCompatActivity() {
         var bundle = intent.extras
         var licenseCarId = bundle.getLong("licenseCarId")
         var imageLicenseCar = bundle.getString("imageLicenseCar")
+        var url = imageLicenseCar
+        val resource = imageViewDetailHistory!!.getResources().getIdentifier("drawable/"+url, null, imageViewDetailHistory!!.getContext().getPackageName())
+        imageViewDetailHistory!!.setImageResource(resource)
         var userId = bundle.getInt("user_id")
         callWebServiceForDetailHistoryAuction(licenseCarId,userId)
 
@@ -46,6 +50,7 @@ class DetailHistoryAuctionActivity : AppCompatActivity() {
                         auctionHistory.lastName = userVM.lastname
                         auctionHistory.finalprice = histories.auctionPrice
                         auctionHistory.endAuctionDate = histories.auctionTime
+                        //auctionHistory.imageLicenseCar = histories.licenseCarsVM!!.imageLicenseCar
                         auctionHistory.id = userVM.id!!.toLong()
                         auctionHistoryList.add(auctionHistory)
                     }

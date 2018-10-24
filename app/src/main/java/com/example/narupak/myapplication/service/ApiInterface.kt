@@ -63,7 +63,7 @@ interface ApiInterface {
     abstract fun saveHistory(@Body history: GenericRequest<SaveHistory>) : Call<SaveHistory>
 
     @POST("queryHistoryAuctionByUserId")
-    abstract fun queryHistoryByUserId(@Query("userId") userId : Int) : Call<List<Long>>
+    abstract fun queryHistoryByUserId(@Query("userId") userId : Int) : Call<List<SaveAuction>>
 
     @POST("querySaveAuctionByLicenseCarId")
     abstract fun querySaveAuctionByLicenseCarId(@Query("licenseCarId") licenseCarId: Long) : Call<ArrayList<SaveAuction>>
@@ -74,9 +74,12 @@ interface ApiInterface {
     @GET("checkStatusLicenseCarByLicenseCarId")
     abstract fun checkStatusLicenseCarByLicenseCarId(@Query("licenseCarId") licenseCarId: Long) : Call<Long>
 
+    @GET("countRegisterAuction")
+    abstract fun countRegisterAuction(@Query("licenseCarId") licenseCarId: Long) : Call<Long>
+
     companion object Factory {
         val client = OkHttpClient()
-        val BASE_URL = "http://157.179.132.196:8080/"
+        val BASE_URL = "http://157.179.132.176:8080/"
         fun create(): ApiInterface {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)

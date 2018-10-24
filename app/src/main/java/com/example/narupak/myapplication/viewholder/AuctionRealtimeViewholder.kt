@@ -10,6 +10,8 @@ import com.example.narupak.myapplication.R
 import com.example.narupak.myapplication.R.id.finalPrice
 import com.example.narupak.myapplication.model.Auction
 import com.example.narupak.myapplication.model.AuctionRealtimeDatabase
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by Narupak on 5/9/2561.
@@ -30,7 +32,13 @@ class AuctionRealtimeViewholder : RecyclerView.ViewHolder{
         }
         fun updateUI(auctionRealtimeList : AuctionRealtimeDatabase){
             bidder.text = auctionRealtimeList.bidder.toString()
-            bidTime.text = auctionRealtimeList.bidtime.toString()
+            var date : Long? = auctionRealtimeList.bidtime
+            ///if(date!! == null){
+                bidTime.text = date.toString()
+//            }else{
+//                val fmt = SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss", Locale("th", "THAILAND"))
+//                bidTime.text = fmt.format(date)
+//            }
             Price.text = auctionRealtimeList.price.toString()
         }
 }

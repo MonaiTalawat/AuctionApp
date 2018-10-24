@@ -30,22 +30,38 @@ class HistoryAuctionActivity : AppCompatActivity() {
     fun callWebServiceForHistory(userId: Int){
         val apiService = ApiInterface.create()
         val call = apiService.queryHistoryByUserId(userId)
-        call.enqueue(object : retrofit2.Callback<List<Long>> {
-            override fun onResponse(call: Call<List<Long>>?, response: Response<List<Long>>?) {
+        call.enqueue(object : retrofit2.Callback<List<SaveAuction>> {
+            override fun onResponse(call: Call<List<SaveAuction>>?, response: Response<List<SaveAuction>>?) {
                 if(response!!.code() == 200) {
-                    var history = response.body()
-                    Log.d("userId",history.toString())
-                    for(licenseCarId in history){
-                        Log.d("userId",licenseCarId.toString())
-                        callWebServiceForQuerySaveAuction(licenseCarId,userId)
-                        Log.d("queryHistoryByUserId","queryHistoryByUserId")
+                    var saveAuction = response.body()
+                    for(save in saveAuction){
+                        var endAuctionDate = save.endAuctionDate
+                        var finalprice = save.finalprice
+                        val licenseCar = save.licenseCarsVM
+                        var imageLicenseCar = licenseCar!!.imageLicenseCar
+                        var numberLicenseCar = licenseCar.number
+                        var seq = licenseCar.seq
+                        val user = save.userVM
+                        var firstName = user!!.firstname
+                        var lastName = user.lastname
+                        var id = user.id
+                        var saveAuctionHistory = SaveAuctionHistory()
+                        saveAuctionHistory.endAuctionDate = endAuctionDate
+                        saveAuctionHistory.finalprice = finalprice
+                        saveAuctionHistory.imageLicenseCar = imageLicenseCar
+                        saveAuctionHistory.firstName = firstName
+                        saveAuctionHistory.lastName = lastName
+                        saveAuctionHistory.numberLicenseCar = numberLicenseCar
+                        saveAuctionHistory.id = id!!.toLong()
+                        saveAuctionHistory.seq = seq
+                        saveAuctionHistoryList.add(saveAuctionHistory)
+                        // Log.d("saveAuctionHistoryList",saveAuctionHistoryList.toString())
                     }
-                    Log.d("queryHistoryByUserId","queryHistoryByUserId")
                 }else{
                     Log.d("failed","failed")
                 }
             }
-            override fun onFailure(call: Call<List<Long>>?, t: Throwable?) {
+            override fun onFailure(call: Call<List<SaveAuction>>?, t: Throwable?) {
 
             }
 

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/backgroudblue">
+    android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constrain_layout"
@@ -32,18 +31,19 @@
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraintLayout6"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="#6a00e6ff"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
 
                 <TextView
                     android:id="@+id/textview_auction"
-                    android:layout_width="219dp"
-                    android:layout_height="38dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="ทะเบียนรถที่กำลังประมูล"
+                    android:textColor="@color/cardview_light_background"
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -56,6 +56,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:text="เพิ่มเติม"
+                    android:textColor="@color/cardview_light_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +94,7 @@
                 android:id="@+id/constraintLayout7"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="#71f2ff00"
+                android:background="#c80d0c0c"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -106,6 +107,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="ทะเบียนรถที่เปิดให้ลงทะเบียน"
+                    android:textColor="@color/cardview_light_background"
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -117,6 +119,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
                     android:text="เพิ่มเติม"
+                    android:textColor="@color/cardview_light_background"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -151,47 +154,232 @@
             app:layout_constraintVertical_bias="0.0">
 
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayoutMyAuction"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="#3fff00a6"
+                android:background="@drawable/gradient2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/myauction_more"
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textview_myauction"
+                        android:layout_width="151dp"
+                        android:layout_height="34dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="3dp"
+                        android:text="ทะเบียนรถของฉัน"
+                        android:textColor="@color/cardview_light_background"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout14"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="เพิ่มเติม"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textview_myauction"
-                    android:layout_width="151dp"
-                    android:layout_height="34dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="ทะเบียนรถของฉัน"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/myrecyclerview"
-                    android:layout_width="360dp"
-                    android:layout_height="139dp"
                     android:layout_marginBottom="8dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textview_myauction">
+                    app:layout_constraintTop_toBottomOf="@+id/constraintMyAuction">
 
-                </android.support.v7.widget.RecyclerView>
+                    <ImageView
+                        android:id="@+id/imageMyAuction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="สวัสดี"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageMyAuction" />
+
+                    <TextView
+                        android:id="@+id/textViewName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="hussen"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.164"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView27"
+                        app:layout_constraintTop_toBottomOf="@+id/imageMyAuction" />
+
+                    <TextView
+                        android:id="@+id/textView30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="นักประมูลระดับ 4  "
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout16"
+                    android:layout_width="250dp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout14">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/constraintMyRegisterAuction"
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/layout_border"
+                        android:backgroundTint="#9bfdd403"
+                        android:paddingTop="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/countRegisterAuction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="1"
+                            android:textColor="@color/cardview_light_background"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:layout_editor_absoluteY="5dp" />
+
+                        <TextView
+                            android:id="@+id/textView32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:text="่ทะเบียนที่เปิดให้ลงทะเบียน"
+                            android:textColor="@color/cardview_light_background"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:layout_editor_absoluteY="5dp" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/constraintMyAuction"
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="36dp"
+                        android:background="@drawable/layout_border"
+                        android:backgroundTint="#6e04b3fe"
+                        android:paddingTop="5dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintMyRegisterAuction">
+
+                        <TextView
+                            android:id="@+id/countMyAuction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="1"
+                            android:textColor="@color/cardview_light_background"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:layout_editor_absoluteY="5dp" />
+
+                        <TextView
+                            android:id="@+id/textView34"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:text="่ทะเบียนที่กำลังทำการประมูล"
+                            android:textColor="@color/cardview_light_background"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:layout_editor_absoluteY="5dp" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/constraintMyHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/layout_border"
+                        android:backgroundTint="#51ee03ff"
+                        android:paddingTop="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintMyAuction"
+                        app:layout_constraintVertical_bias="0.108">
+
+                        <TextView
+                            android:id="@+id/countMyHistory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="3"
+                            android:textColor="@color/cardview_light_background"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView36"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:text="ประวัติการประมูล"
+                            android:textColor="@color/cardview_light_background"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
             </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
 

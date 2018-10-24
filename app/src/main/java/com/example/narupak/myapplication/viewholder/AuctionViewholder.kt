@@ -38,8 +38,15 @@ class AuctionViewholder : RecyclerView.ViewHolder,View.OnClickListener {
         }else{
             layoutAuction.setBackgroundResource(R.drawable.gradient2)
         }
-        var url = auction.getImgUrl()
-        val resource = imageview_auction!!.getResources().getIdentifier(url, null, imageview_auction!!.getContext().getPackageName())
-        imageview_auction!!.setImageResource(resource)
+        var image = auction.getImgUrl()
+        if(!image.equals(null)) {
+            var url = image
+            val resource = imageview_auction!!.getResources().getIdentifier(url, null, imageview_auction!!.getContext().getPackageName())
+            imageview_auction!!.setImageResource(resource)
+        }else{
+            var url = "drawable/car_default"
+            val resource = imageview_auction!!.getResources().getIdentifier(url, null, imageview_auction!!.getContext().getPackageName())
+            imageview_auction!!.setImageResource(resource)
+        }
     }
 }

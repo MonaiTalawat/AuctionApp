@@ -14,7 +14,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_history_auction.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 /**
  * Created by Narupak on 12/10/2561.
  */
@@ -43,11 +42,11 @@ class DetailHistoryAuctionViewholder : RecyclerView.ViewHolder{
         var detailHistoryAuctionUser = detailHistoryAuction.firstName+" "+detailHistoryAuction.lastName
         detailuser.text = detailHistoryAuctionUser
         if(detailHistoryAuction.id == userId){
-            detailConstraint.setBackgroundColor(Color.parseColor("#a0ff5e00"))
+            detailConstraint.setBackgroundColor(Color.parseColor("#86ff8aca"))
 
             //Picasso.with(mContext).load().into(detailFinalDateAuction.imageViewDetailHistory);
         }else{
-            detailConstraint.setBackgroundColor(Color.parseColor("#b2540004"))
+            detailConstraint.setBackgroundColor(Color.parseColor("#8294ff99"))
         }
     }
 

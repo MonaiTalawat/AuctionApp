@@ -40,24 +40,21 @@ class DetailHistoryAuctionActivity : AppCompatActivity() {
         call.enqueue(object : retrofit2.Callback<List<DetailHistoryAuction>> {
             override fun onResponse(call: Call<List<DetailHistoryAuction>>?, response: Response<List<DetailHistoryAuction>>?) {
                 if(response!!.code() == 200) {
-                    var history = response.body()
-                    //Log.d("Detailhistory",history.toString())
+                    val history = response.body()
                     for(histories in history ){
-                        Log.d("Detailhistory",histories.toString())
-                        var auctionHistory = SaveAuctionHistory()
+                        val auctionHistory = SaveAuctionHistory()
                         val userVM = histories.userVM
                         auctionHistory.firstName = userVM!!.firstname
                         auctionHistory.lastName = userVM.lastname
                         auctionHistory.finalprice = histories.auctionPrice
                         auctionHistory.endAuctionDate = histories.auctionTime
-                        //auctionHistory.imageLicenseCar = histories.licenseCarsVM!!.imageLicenseCar
                         auctionHistory.id = userVM.id!!.toLong()
                         auctionHistoryList.add(auctionHistory)
                     }
                     val RecyclerViewForDetailHistory = findViewById<View>(R.id.recyclerViewDetailHistory) as RecyclerView
                     val linearLayoutManager = LinearLayoutManager(this@DetailHistoryAuctionActivity)
                     AdapterDetailHistoryAuction = AdapterDetailHistoryAuction(auctionHistoryList,userId.toLong())
-                    RecyclerViewForDetailHistory!!.adapter = AdapterDetailHistoryAuction
+                    RecyclerViewForDetailHistory.adapter = AdapterDetailHistoryAuction
                     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                     RecyclerViewForDetailHistory.layoutManager = linearLayoutManager
                 }else{

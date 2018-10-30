@@ -1,11 +1,13 @@
 package com.example.narupak.myapplication.activity
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.View
-import android.widget.EditText
+import android.widget.Toast
 import com.example.narupak.myapplication.GenericRequest
 import com.example.narupak.myapplication.R
 import com.example.narupak.myapplication.R.id.user
@@ -15,7 +17,6 @@ import com.example.narupak.myapplication.service.ApiInterface
 import kotlinx.android.synthetic.main.activity_register.*
 import retrofit2.Call
 import retrofit2.Response
-import javax.security.auth.callback.Callback
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -31,22 +32,23 @@ class RegisterActivity : AppCompatActivity() {
             val phone = rg_phone.text.toString()
             val mail = rg_email.text.toString()
             val user = User(username,password,firstname,lastname,address,phone,mail)
-            callWebservice(user)
+            callWebservice(user, this)
             var intent = Intent(baseContext,LoginActivity::class.java)
             startActivity(intent)
             finish()
         })
     }
-    fun callWebservice(user : User){
+    fun callWebservice(user: User, context: Context){
         val apiService = ApiInterface.create()
         val users = GenericRequest<User>()
         users.request = user
         val call = apiService.registerUser(users)
-        Log.d("REQUEST", call.toString() + "")
         call.enqueue(object : retrofit2.Callback<User>{
             override fun onResponse(call: Call<User>?, response: Response<User>?) {
                 if(response!!.isSuccessful){
-                    Log.d("success",response.body().toString())
+                    Toast.makeText(context,"ลงทะเบียนสำเร็จ",Toast.LENGTH_LONG).show()
+                }else{
+                    Toast.makeText(context,"ลงทะเบียนไม่สำเร็จ",Toast.LENGTH_LONG).show()
                 }
             }
 

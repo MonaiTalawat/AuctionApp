@@ -34,15 +34,21 @@ class DetailActivity : AppCompatActivity() {
         val userId = bundle.getInt("user_id")
         countRegisterAuction(licenseCarId)
         val registerAucrion = RegisterAuctionLicenseCar(userId,licenseCarId)
+        callWebServiceForDetailLicenseCar(licenseCarId)
+        checkRegisterAuction(userId,licenseCarId,this)
+        btn_register_auction.setOnClickListener(View.OnClickListener {
+            callWebServiceForRegisterAuction(registerAucrion,this)
+        })
+    }
+
+
+    fun callWebServiceForDetailLicenseCar(licenseCarId: Long) {
         val apiService = ApiInterface.create()
         val call = apiService.queryLicenseCarDetailById(licenseCarId)
         call.enqueue(object : retrofit2.Callback<List<DetailLicenseCar>> {
-            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<List<DetailLicenseCar>>?, response: Response<List<DetailLicenseCar>>?) {
                 if(response?.code() == 200){
-                    //Log.d("list",response.body().toString())
-                    for (list in response.body().listIterator()){
-                        Log.d("list",list.acutionDate.toString())
+                    for (list in response.body()){
                         val startRegisterDate = Date(list.acutionDate*1000)
                         val endRegisterDate = Date(list.endRegisterDate*1000)
                         val df = SimpleDateFormat("d MMMM พ.ศ. yyyy",Locale("th","TH"))
@@ -50,7 +56,6 @@ class DetailActivity : AppCompatActivity() {
                         enddate_register.text = df.format(endRegisterDate)
                         firstprice.text = list.firstprice.toString()
                         val url = list.getImgLicenseCarUrl()
-                        Log.d("list",list.getImgLicenseCarUrl())
                         val resource = image_detail!!.getResources().getIdentifier(url, null, image_detail!!.getContext().getPackageName())
                         image_detail!!.setImageResource(resource)
                         count_person.text = amountRegisterAuctionLicenseCar.toString()
@@ -63,12 +68,7 @@ class DetailActivity : AppCompatActivity() {
                 Log.d("failed",t.toString())
             }
         })
-        checkRegisterAuction(userId,licenseCarId,this)
-        btn_register_auction.setOnClickListener(View.OnClickListener {
-            callWebServiceForRegisterAuction(registerAucrion,this)
-        })
     }
-
     private fun checkRegisterAuction(userId: Int, licenseCarId: Long,context: Context) {
         val apiService = ApiInterface.create()
         val registerAuctionList = GenericRequest<RegisterAuctionLicenseCar>()
@@ -110,7 +110,6 @@ class DetailActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseRegister>?, response: Response<ResponseRegister>?) {
                 if(response!!.code() == 200) {
                     btn_register_auction.visibility = GONE
-                    //btn_register_auction.text = ""
                     val layout = findViewById<View>(R.id.layout_for_button) as ConstraintLayout
                     val imageView = ImageView(context)
                     imageView.setImageResource(R.drawable.ic_check_black_24dp)

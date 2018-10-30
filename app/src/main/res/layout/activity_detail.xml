@@ -1,228 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/my_gradiant_drawable"
-    tools:context="com.example.narupak.myapplication.activity.DetailActivity">
+    android:background="@drawable/gradient3">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="0dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="รายละเอียดการลงทะเบียนประมูลทะเบียนรถ"
-        android:textColor="@android:color/background_light"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.605"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/image_detail"
-        android:layout_width="344dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp"
-        android:scaleType="fitXY"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:srcCompat="@drawable/tabian1" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="344dp"
-        android:layout_height="281dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="#45ffffff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_detail"
-        app:layout_constraintVertical_bias="0.0">
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.narupak.myapplication.activity.DetailActivity">
 
         <TextView
-            android:id="@+id/textView10"
-            android:layout_width="93dp"
-            android:layout_height="23dp"
+            android:id="@+id/textView6"
+            android:layout_width="0dp"
+            android:layout_height="37dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="36dp"
-            android:text="วันที่ลงทะเบียน"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.136"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/startdate_register"
-            android:layout_width="97dp"
-            android:layout_height="65dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="21/08/61"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.142"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="157dp"
-            android:layout_height="21dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="36dp"
-            android:text="วันที่สิ้นสุดการลงทะเบียน"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.953"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/enddate_register"
-            android:layout_width="126dp"
-            android:layout_height="57dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="21/08/61"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.806"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="104dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="ราคาเสนอเริ่มต้น"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.142"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startdate_register" />
-
-        <TextView
-            android:id="@+id/firstprice"
-            android:layout_width="58dp"
-            android:layout_height="29dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="10000"
+            android:text="รายละเอียดการลงทะเบียนประมูลทะเบียนรถ"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.118"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="114dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="12dp"
-            android:text="ราคาเสนอขั้นต่ำ"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.743"
+            app:layout_constraintHorizontal_bias="0.605"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enddate_register" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/minprice"
-            android:layout_width="36dp"
-            android:layout_height="29dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+        <ImageView
+            android:id="@+id/image_detail"
+            android:layout_width="344dp"
+            android:layout_height="150dp"
             android:layout_marginTop="8dp"
-            android:text="500"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.558"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+            android:elevation="10dp"
+            android:scaleType="fitXY"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:srcCompat="@drawable/tabian1" />
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="154dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="48dp"
-            android:text="จำนวนคนที่ลงทะเบียน :"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.183"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/firstprice" />
-
-        <TextView
-            android:id="@+id/count_person"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="344dp"
+            android:layout_height="281dp"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="10"
+            android:background="@color/cardview_shadow_start_color"
+            android:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.586"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/minprice"
-            app:layout_constraintVertical_bias="0.836" />
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_for_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-
-        <Button
-            android:id="@+id/btn_register_auction"
-            android:layout_width="157dp"
-            android:layout_height="49dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/holo_orange_light"
-            android:text="ลงทะเบียน"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/layout_for_button"
+            app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/layout_for_button"
-            app:layout_constraintTop_toTopOf="@+id/layout_for_button" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_detail"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="93dp"
+                android:layout_height="23dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="36dp"
+                android:text="วันที่ลงทะเบียน"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.136"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/startdate_register"
+                android:layout_width="97dp"
+                android:layout_height="65dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="21/08/61"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.142"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="157dp"
+                android:layout_height="21dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="36dp"
+                android:text="วันที่สิ้นสุดการลงทะเบียน"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.953"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/enddate_register"
+                android:layout_width="126dp"
+                android:layout_height="57dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="21/08/61"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.806"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="104dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="ราคาเสนอเริ่มต้น"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.142"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startdate_register" />
+
+            <TextView
+                android:id="@+id/firstprice"
+                android:layout_width="58dp"
+                android:layout_height="29dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="10000"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.118"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="114dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="12dp"
+                android:text="ราคาเสนอขั้นต่ำ"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.743"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/enddate_register" />
+
+            <TextView
+                android:id="@+id/minprice"
+                android:layout_width="36dp"
+                android:layout_height="29dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="500"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.558"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="154dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="48dp"
+                android:text="จำนวนคนที่ลงทะเบียน :"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.183"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/firstprice" />
+
+            <TextView
+                android:id="@+id/count_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="10"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.586"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/minprice"
+                app:layout_constraintVertical_bias="0.836" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_for_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <Button
+                android:id="@+id/btn_register_auction"
+                android:layout_width="157dp"
+                android:layout_height="49dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/backgroundpremium"
+                android:elevation="10dp"
+                android:text="ลงทะเบียน"
+                android:textAlignment="gravity"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/layout_for_button"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/layout_for_button"
+                app:layout_constraintTop_toTopOf="@+id/layout_for_button" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
-</android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

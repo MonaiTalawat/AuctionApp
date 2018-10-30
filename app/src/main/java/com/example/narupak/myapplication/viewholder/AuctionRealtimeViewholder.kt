@@ -4,6 +4,7 @@ import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.view.View.Y
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.narupak.myapplication.R
@@ -33,12 +34,13 @@ class AuctionRealtimeViewholder : RecyclerView.ViewHolder{
         fun updateUI(auctionRealtimeList : AuctionRealtimeDatabase){
             bidder.text = auctionRealtimeList.bidder.toString()
             var date : Long? = auctionRealtimeList.bidtime
-            ///if(date!! == null){
+            if(date == null){
+                date = Date().time
                 bidTime.text = date.toString()
-//            }else{
-//                val fmt = SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss", Locale("th", "THAILAND"))
-//                bidTime.text = fmt.format(date)
-//            }
+            }else{
+                val fmt = SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss", Locale("th", "THAILAND"))
+                bidTime.text = fmt.format(date)
+            }
             Price.text = auctionRealtimeList.price.toString()
         }
 }

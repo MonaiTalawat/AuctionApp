@@ -79,7 +79,7 @@ interface ApiInterface {
 
     companion object Factory {
         val client = OkHttpClient()
-        val BASE_URL = "http://157.179.132.176:8080/"
+        val BASE_URL = "http://157.179.133.15:8080/"
         fun create(): ApiInterface {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)

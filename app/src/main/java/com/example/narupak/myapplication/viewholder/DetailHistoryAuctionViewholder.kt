@@ -32,7 +32,6 @@ class DetailHistoryAuctionViewholder : RecyclerView.ViewHolder{
     }
 
 
-    @SuppressLint("ResourceAsColor")
     fun updateUI(detailHistoryAuction: SaveAuctionHistory, userId: Long?){
         val date = detailHistoryAuction.endAuctionDate!!.toLong()
         val fmt = SimpleDateFormat("d MMMM พ.ศ. yyyy", Locale("th", "th"))
@@ -42,11 +41,9 @@ class DetailHistoryAuctionViewholder : RecyclerView.ViewHolder{
         var detailHistoryAuctionUser = detailHistoryAuction.firstName+" "+detailHistoryAuction.lastName
         detailuser.text = detailHistoryAuctionUser
         if(detailHistoryAuction.id == userId){
-            detailConstraint.setBackgroundColor(Color.parseColor("#86ff8aca"))
-
-            //Picasso.with(mContext).load().into(detailFinalDateAuction.imageViewDetailHistory);
+            detailConstraint.setBackgroundResource(R.drawable.gradiant6)
         }else{
-            detailConstraint.setBackgroundColor(Color.parseColor("#8294ff99"))
+            detailConstraint.setBackgroundResource(R.drawable.gradiant7)
         }
     }
 

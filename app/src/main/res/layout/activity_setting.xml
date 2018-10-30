@@ -1,152 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/my_gradiant_drawable"
-    tools:context="com.example.narupak.myapplication.activity.SettingActivity">
+    android:background="@drawable/gardiant5">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="360dp"
-        android:layout_height="122dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/layout_border"
-        android:backgroundTint="#45ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19">
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.narupak.myapplication.activity.SettingActivity">
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="104dp"
-            android:layout_height="92dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.078"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.51"
-            app:srcCompat="@drawable/ic_account_circle_black_24dp" />
-
-        <TextView
-            android:id="@+id/name_setting"
-            android:layout_width="184dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="Thomas Thors"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.172"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/email_setting"
-            android:layout_width="186dp"
-            android:layout_height="27dp"
-            android:layout_marginStart="12dp"
-            android:text="Thomas@hotmail.com"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/name_setting" />
-
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="360dp"
+            android:layout_height="122dp"
             android:layout_marginTop="8dp"
-            android:text="Log out"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/layout_border"
+            android:backgroundTint="@color/common_google_signin_btn_text_dark_disabled"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.104"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/email_setting"
-            app:layout_constraintVertical_bias="1.0" />
-    </android.support.constraint.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="95dp"
-        android:layout_height="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="การตั้งค่า"
-        android:textColor="@android:color/background_light"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout3"
-        android:layout_width="360dp"
-        android:layout_height="133dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/layout_border"
-        android:backgroundTint="#45ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
-
-        <TextView
-            android:id="@+id/textView23"
-            android:layout_width="71dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="เกี่ยวกับ"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.034"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="79dp"
-            android:layout_height="26dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="เวอร์ชั่น App"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.064"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23" />
-
-        <TextView
-            android:id="@+id/textView25"
-            android:layout_width="wrap_content"
-            android:layout_height="39dp"
-            android:layout_marginBottom="8dp"
-            android:text="Car Auction 4.0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.094"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView24"
-            app:layout_constraintVertical_bias="0.2" />
-    </android.support.constraint.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/textView19">
 
-</android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="104dp"
+                android:layout_height="92dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.078"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.51"
+                app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+            <TextView
+                android:id="@+id/name_setting"
+                android:layout_width="184dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Thomas Thors"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.172"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/email_setting"
+                android:layout_width="186dp"
+                android:layout_height="27dp"
+                android:layout_marginStart="12dp"
+                android:text="Thomas@hotmail.com"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/name_setting" />
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/holo_red_light"
+                android:text="Log out"
+                android:textColor="@color/cardview_light_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.104"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toBottomOf="@+id/email_setting"
+                app:layout_constraintVertical_bias="1.0" />
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="95dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="การตั้งค่า"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.09"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="360dp"
+            android:layout_height="133dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/layout_border"
+            android:backgroundTint="@color/common_google_signin_btn_text_dark_disabled"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="71dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="เกี่ยวกับ"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.034"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="79dp"
+                android:layout_height="26dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="เวอร์ชั่น App"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.064"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="wrap_content"
+                android:layout_height="39dp"
+                android:layout_marginBottom="8dp"
+                android:text="Car Auction 4.0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.094"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView24"
+                app:layout_constraintVertical_bias="0.2" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

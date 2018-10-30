@@ -57,57 +57,6 @@ class AuctionAdapter : RecyclerView.Adapter<AuctionViewholder> {
                 holder.itemView.context.startActivity(intent)
                 (holder.itemView.context as MainMenuActivity).finish()
             }
-            if(type_page == "myauction"){
-                if(auctions.status!! == "1") {
-                    var intent = Intent(holder.itemView.context, DetailActivity::class.java)
-                    intent.putExtra("licenseCarId", auctions.seq)
-                    intent.putExtra("user_id", userId)
-                    intent.putExtra("typePage", "myauction")
-                    intent.putExtra("status", status)
-                    holder.itemView.context.startActivity(intent)
-                    (holder.itemView.context as MainMenuActivity).finish()
-                }else if(auctions.status == "2"){
-                    // Initialize a new instance of
-                    val builder = AlertDialog.Builder(holder!!.itemView.context)
-                    // Set the alert dialog title
-                    builder.setTitle("Warnning Auction")
-                    // Display a message on alert dialog
-                    builder.setMessage("Are you want to Auction LicenseCar?")
-                    // Set a positive button and its click listener on alert dialog
-                    builder.setPositiveButton("YES") { dialog, which ->
-                        // Do something when user press the positive button
-                        Toast.makeText(holder!!.itemView.context, "Ok, we change the app background.", Toast.LENGTH_SHORT).show()
-                        var intent = Intent(holder.itemView.context, AuctionActivity::class.java)
-                        intent.putExtra("licenseCarId", auctions.seq)
-                        intent.putExtra("user_id", userId)
-                        intent.putExtra("typePage", "myauction")
-                        intent.putExtra("image",auctions.imageLicenseCar)
-                        intent.putExtra("status", status)
-                        holder.itemView.context.startActivity(intent)
-                        (holder.itemView.context as MainMenuActivity).finish()
-                    }
-                    // Display a negative button on alert dialog
-                    builder.setNegativeButton("No") { dialog, which ->
-                        Toast.makeText(holder.itemView.context, "You are not agree.", Toast.LENGTH_SHORT).show()
-                    }
-
-                    // Finally, make the alert dialog using builder
-                    val dialog: AlertDialog = builder.create()
-
-                    // Display the alert dialog on app interface
-                    dialog.show()
-                }else{
-                    var intent = Intent(holder.itemView.context, DetailHistoryAuctionActivity::class.java)
-                    intent.putExtra("licenseCarId", auctions.seq)
-                    intent.putExtra("user_id", userId)
-                    intent.putExtra("typePage", "myauction")
-                    intent.putExtra("imageLicenseCar",auctions.imageLicenseCar)
-                    intent.putExtra("status", status)
-                    holder.itemView.context.startActivity(intent)
-
-                }
-
-            }
         })
 
     }
@@ -126,11 +75,11 @@ class AuctionAdapter : RecyclerView.Adapter<AuctionViewholder> {
                     // Initialize a new instance of
                     val builder = AlertDialog.Builder(holder!!.itemView.context)
                     // Set the alert dialog title
-                    builder.setTitle("Warnning Auction")
+                    builder.setTitle("แจ้งเตือน")
                     // Display a message on alert dialog
-                    builder.setMessage("Can not open LicenseCar")
+                    builder.setMessage("เลขทะเบียนนี้สิ้นสุดการประมูลแล้ว")
                     // Set a positive button and its click listener on alert dialog
-                    builder.setPositiveButton("Cancel") { dialog, which ->
+                    builder.setPositiveButton("ปิด") { dialog, which ->
                         var intent = Intent(holder.itemView.context, MainMenuActivity::class.java)
                         intent.putExtra("user_id", userId)
                         holder.itemView.context.startActivity(intent)
@@ -145,13 +94,13 @@ class AuctionAdapter : RecyclerView.Adapter<AuctionViewholder> {
                     // Initialize a new instance of
                     val builder = AlertDialog.Builder(holder!!.itemView.context)
                     // Set the alert dialog title
-                    builder.setTitle("Warnning Auction")
+                    builder.setTitle("แจ้งเตือน")
                     // Display a message on alert dialog
-                    builder.setMessage("Are you want to Auction LicenseCar?")
+                    builder.setMessage("คุณต้องการเข้าร่วมการประมูลใช่หรือไม่")
                     // Set a positive button and its click listener on alert dialog
-                    builder.setPositiveButton("YES") { dialog, which ->
+                    builder.setPositiveButton("ใช่") { dialog, which ->
                         // Do something when user press the positive button
-                        Toast.makeText(holder!!.itemView.context, "Ok, we change the app background.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(holder!!.itemView.context, "ขอให้ได้ขอให้โดน", Toast.LENGTH_SHORT).show()
                         var intent = Intent(holder.itemView.context, AuctionActivity::class.java)
                         intent.putExtra("licenseCarId", auctions.seq!!)
                         intent.putExtra("user_id", userId)
@@ -163,8 +112,8 @@ class AuctionAdapter : RecyclerView.Adapter<AuctionViewholder> {
 
                     }
                     // Display a negative button on alert dialog
-                    builder.setNegativeButton("No") { dialog, which ->
-                        Toast.makeText(holder.itemView.context, "You are not agree.", Toast.LENGTH_SHORT).show()
+                    builder.setNegativeButton("ไม่") { dialog, which ->
+                        Toast.makeText(holder.itemView.context, "เสียดายจัง", Toast.LENGTH_SHORT).show()
                     }
 
                     // Finally, make the alert dialog using builder

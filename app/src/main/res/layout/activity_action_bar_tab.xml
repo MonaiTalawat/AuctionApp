@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gardiant5"
     tools:context="com.example.narupak.myapplication.activity.ActionBarTabActivity">
 
     <android.support.constraint.ConstraintLayout

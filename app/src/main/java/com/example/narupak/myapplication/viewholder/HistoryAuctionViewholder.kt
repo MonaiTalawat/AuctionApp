@@ -37,8 +37,6 @@ class HistoryAuctionViewholder : RecyclerView.ViewHolder {
 
 
     fun updateUI(saveAuction: SaveAuctionHistory, holder: HistoryAuctionViewholder?){
-        //imageHistory = saveAuction.
-        val numberLicenseCar = "เลขทะเบียน "+saveAuction.numberLicenseCar
         val finalPrices = saveAuction.finalprice.toString()
         val userWinners = "ผู้ชนะคือ "+saveAuction.firstName+" "+saveAuction.lastName
         val date = saveAuction.endAuctionDate
@@ -53,8 +51,6 @@ class HistoryAuctionViewholder : RecyclerView.ViewHolder {
             val resource = imageHistory!!.getResources().getIdentifier("drawable/" + image, null, imageHistory!!.getContext().getPackageName())
             imageHistory!!.setImageResource(resource)
         }
-        //Picasso.with(holder!!.itemView.context).load(R.drawable).placeholder(R.drawable.hammer).into(imageHistory);
-        //val date = Instant.ofEpochMilli(saveAuction.endAuctionDate!!).atZone(ZoneId.systemDefault()).toLocalDate()
         val finalDateAuctions = fmt.format(date)
         finalDateAuction.text = finalDateAuctions.toString()
         finalPrice.text = finalPrices

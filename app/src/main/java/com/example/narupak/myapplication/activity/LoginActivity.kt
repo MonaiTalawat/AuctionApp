@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 else{
-                    //Toast.makeText(applicationContext,"login failed",Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext,"login failed",Toast.LENGTH_LONG).show()
                 }
             }
                 override fun onFailure(call: Call<List<User>>?, t: Throwable?) {

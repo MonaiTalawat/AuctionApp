@@ -9,16 +9,14 @@ class AuctionRealtimeDatabase {
 
     var bidder : Long? = null
     var bidtime : Long? = null
-    var status : String? = null
     var firstTime : Long? = null
     var price : Long? = null
 
 
     constructor()
-    constructor(bidder: Long?, bidtime: Long?, status: String?, firstTime: Long?, price: Long?) {
+    constructor(bidder: Long?, bidtime: Long?, firstTime: Long?, price: Long?) {
         this.bidder = bidder
         this.bidtime = bidtime
-        this.status = status
         this.firstTime = firstTime
         this.price = price
     }
